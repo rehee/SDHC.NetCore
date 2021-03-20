@@ -1,4 +1,5 @@
 ﻿using Common.Models;
+using Common.NetCore.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using SDHC.UserAndRoles.Models;

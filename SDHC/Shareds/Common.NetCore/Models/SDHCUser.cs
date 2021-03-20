@@ -1,8 +1,10 @@
 ﻿using Common.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace SDHC.UserAndRoles.Models
+namespace Common.NetCore.Models
 {
   public class SDHCUser : IdentityUser, IUserBase
   {

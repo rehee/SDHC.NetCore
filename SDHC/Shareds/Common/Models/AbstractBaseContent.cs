@@ -9,9 +9,9 @@ namespace Common.Models
 {
   public abstract class AbstractBaseContent : IContentModel
   {
-    private static Type baseIContentModelType { get; set; }
-    private static ICrud Crud { get; } = GetCrud();
-    private static Func<ICrud> GetCrud { get; set; } = () => null;
+    protected static Type baseIContentModelType { get; set; }
+    protected static ICrud Crud { get; } = GetCrud();
+    protected static Func<ICrud> GetCrud { get; set; } = () => null;
     public static void Init<BaseIContentType>(Func<ICrud> getCrud) where BaseIContentType : class, IContentModel
     {
       GetCrud = getCrud;
