@@ -7,12 +7,14 @@ using SDHC.JWT.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UserIdentity.Services;
 
 namespace SDHC.JWT
 {
   public class StartUpFunction
   {
-    public static void ConfigureServices(IConfiguration configuration, IServiceCollection services, string tokenString = "tokenConfig")
+    public static void ConfigureServices<TSDHCUserManager>(IConfiguration configuration, IServiceCollection services, string tokenString = "tokenConfig")
+      where TSDHCUserManager : ISDHCUserManager
     {
       services.Configure<TokenManagement>(configuration.GetSection(tokenString));
       var tokenConfig = configuration.GetSection(tokenString).Get<TokenManagement>();
@@ -39,7 +41,7 @@ namespace SDHC.JWT
       });
 
       services.AddScoped<IAuthenticateService, TokenAuthenticationService>();
-      services.AddScoped<IUserService, UserService>();
+      services.AddScoped(typeof(ISDHCUserManager), typeof(TSDHCUserManager));
     }
   }
 }

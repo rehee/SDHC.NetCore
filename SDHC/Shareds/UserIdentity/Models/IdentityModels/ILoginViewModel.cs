@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace UserIdentity.Models.IdentityModels
+﻿namespace UserIdentity.Models.IdentityModels
 {
   public interface IEmailPasswordBased : IEmailBasedViewModel
   {
@@ -12,7 +8,7 @@ namespace UserIdentity.Models.IdentityModels
   {
     bool RememberMe { get; set; }
   }
-  public interface IRegisterViewModel : IEmailBasedViewModel
+  public interface IRegisterViewModel : IEmailPasswordBased
   {
     string ConfirmPassword { get; set; }
   }

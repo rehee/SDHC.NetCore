@@ -12,23 +12,23 @@ using UserIdentity.Services;
 namespace SDHC.UserAndRoles.Services
 {
   public class SDHCSignInService<T> :
-    ISDHCSignInService<IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo>
+    ISDHCSignInService<T, IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo>
     where T : SDHCUser, new()
   {
     private SignInManager<T> signInManager { get; }
-    //public SDHCSignInService(SignInManager<T> signInManager)
-    //{
-    //  this.signInManager = signInManager;
-    //}
-
-    public Task<bool> CanSignInAsync(IUserBase user)
+    public SDHCSignInService(SignInManager<T> signInManager)
     {
-      return signInManager.CanSignInAsync(user as T);
+      this.signInManager = signInManager;
     }
 
-    public Task<SignInResult> CheckPasswordSignInAsync(IUserBase user, string password, bool lockoutOnFailure)
+    public Task<bool> CanSignInAsync(T user)
     {
-      return signInManager.CheckPasswordSignInAsync(user as T, password, lockoutOnFailure);
+      return signInManager.CanSignInAsync(user);
+    }
+
+    public Task<SignInResult> CheckPasswordSignInAsync(T user, string password, bool lockoutOnFailure)
+    {
+      return signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure);
     }
 
     public async Task<dynamic> GetTwoFactorAuthenticationUserAsync()
@@ -36,14 +36,14 @@ namespace SDHC.UserAndRoles.Services
       return await signInManager.GetTwoFactorAuthenticationUserAsync();
     }
 
-    public Task<bool> IsTwoFactorClientRememberedAsync(IUserBase user)
+    public Task<bool> IsTwoFactorClientRememberedAsync(T user)
     {
-      return signInManager.IsTwoFactorClientRememberedAsync(user as T);
+      return signInManager.IsTwoFactorClientRememberedAsync(user);
     }
 
-    public Task<ClaimsPrincipal> CreateUserPrincipalAsync(IUserBase user)
+    public Task<ClaimsPrincipal> CreateUserPrincipalAsync(T user)
     {
-      return signInManager.CreateUserPrincipalAsync(user as T);
+      return signInManager.CreateUserPrincipalAsync(user);
     }
 
     public AuthenticationProperties ConfigureExternalAuthenticationProperties(string provider, string redirectUrl, string userId = null)
@@ -86,39 +86,39 @@ namespace SDHC.UserAndRoles.Services
       return signInManager.PasswordSignInAsync(userName, password, isPersistent, lockoutOnFailure);
     }
 
-    public Task<SignInResult> PasswordSignInAsync(IUserBase user, string password, bool isPersistent, bool lockoutOnFailure)
+    public Task<SignInResult> PasswordSignInAsync(T user, string password, bool isPersistent, bool lockoutOnFailure)
     {
-      return signInManager.PasswordSignInAsync(user as T, password, isPersistent, lockoutOnFailure);
+      return signInManager.PasswordSignInAsync(user, password, isPersistent, lockoutOnFailure);
     }
 
-    public Task RefreshSignInAsync(IUserBase user)
+    public Task RefreshSignInAsync(T user)
     {
-      return signInManager.RefreshSignInAsync(user as T);
+      return signInManager.RefreshSignInAsync(user);
     }
 
-    public Task RememberTwoFactorClientAsync(IUserBase user)
+    public Task RememberTwoFactorClientAsync(T user)
     {
-      return signInManager.RememberTwoFactorClientAsync(user as T);
+      return signInManager.RememberTwoFactorClientAsync(user);
     }
 
-    public Task SignInAsync(IUserBase user, bool isPersistent, string authenticationMethod = null)
+    public Task SignInAsync(T user, bool isPersistent, string authenticationMethod = null)
     {
-      return signInManager.SignInAsync(user as T, isPersistent, authenticationMethod);
+      return signInManager.SignInAsync(user, isPersistent, authenticationMethod);
     }
 
-    public Task SignInAsync(IUserBase user, AuthenticationProperties authenticationProperties, string authenticationMethod = null)
+    public Task SignInAsync(T user, AuthenticationProperties authenticationProperties, string authenticationMethod = null)
     {
-      return signInManager.SignInAsync(user as T, authenticationProperties, authenticationMethod);
+      return signInManager.SignInAsync(user, authenticationProperties, authenticationMethod);
     }
 
-    public Task SignInWithClaimsAsync(IUserBase user, AuthenticationProperties authenticationProperties, IEnumerable<Claim> additionalClaims)
+    public Task SignInWithClaimsAsync(T user, AuthenticationProperties authenticationProperties, IEnumerable<Claim> additionalClaims)
     {
-      return signInManager.SignInWithClaimsAsync(user as T, authenticationProperties, additionalClaims);
+      return signInManager.SignInWithClaimsAsync(user, authenticationProperties, additionalClaims);
     }
 
-    public Task SignInWithClaimsAsync(IUserBase user, bool isPersistent, IEnumerable<Claim> additionalClaims)
+    public Task SignInWithClaimsAsync(T user, bool isPersistent, IEnumerable<Claim> additionalClaims)
     {
-      return signInManager.SignInWithClaimsAsync(user as T, isPersistent, additionalClaims);
+      return signInManager.SignInWithClaimsAsync(user, isPersistent, additionalClaims);
     }
 
     public Task SignOutAsync()
@@ -146,17 +146,17 @@ namespace SDHC.UserAndRoles.Services
       return signInManager.UpdateExternalAuthenticationTokensAsync(externalLogin);
     }
 
-    public async Task<IUserBase> ValidateSecurityStampAsync(ClaimsPrincipal principal)
+    public async Task<T> ValidateSecurityStampAsync(ClaimsPrincipal principal)
     {
       return await signInManager.ValidateSecurityStampAsync(principal);
     }
 
-    public Task<bool> ValidateSecurityStampAsync(IUserBase user, string securityStamp)
+    public Task<bool> ValidateSecurityStampAsync(T user, string securityStamp)
     {
-      return signInManager.ValidateSecurityStampAsync(user as T, securityStamp);
+      return signInManager.ValidateSecurityStampAsync(user, securityStamp);
     }
 
-    public async Task<IUserBase> ValidateTwoFactorSecurityStampAsync(ClaimsPrincipal principal)
+    public async Task<T> ValidateTwoFactorSecurityStampAsync(ClaimsPrincipal principal)
     {
       return await signInManager.ValidateTwoFactorSecurityStampAsync(principal);
     }

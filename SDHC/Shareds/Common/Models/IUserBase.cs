@@ -6,6 +6,7 @@ namespace Common.Models
 {
   public interface IUserBase : IDisplayName, IStringKey
   {
-    
+    string GetUserName();
+    string GetEmail();
   }
 }

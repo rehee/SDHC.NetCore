@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Common.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -48,10 +49,11 @@ namespace SDHC
         .AddDefaultTokenProviders();
       services.AddScoped<RoleManager<IdentityRole>>();
 
-      services.AddScoped(typeof(ISDHCMemberService<IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo>), typeof(SDHCMemberService<SDHCUser>));
-      services.AddScoped(typeof(ISDHCSignInService<IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo>), typeof(SDHCSignInService<SDHCUser>));
+      services.AddScoped(typeof(ISDHCMemberService<SDHCUser, IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo>), typeof(SDHCMemberService<SDHCUser>));
+      services.AddScoped(typeof(ISDHCSignInService<SDHCUser, IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo>), typeof(SDHCSignInService<SDHCUser>));
+      services.AddScoped<ISDHCUserManager<SDHCUser>, SDHCUserManager<SDHCUser>>();
       services.AddScoped<ISDHCUserManager, SDHCUserManager<SDHCUser>>();
-      StartUpFunction.ConfigureServices(Configuration, services);
+      StartUpFunction.ConfigureServices<SDHCUserManager<SDHCUser>>(Configuration, services);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

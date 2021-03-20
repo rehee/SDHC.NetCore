@@ -50,5 +50,14 @@ namespace SDHC.UserAndRoles.Models
     public string WeChatOpenId { get; set; }
 
     //public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
+
+    public string GetUserName()
+    {
+      return this.UserName;
+    }
+    public string GetEmail()
+    {
+      return this.Email;
+    }
   }
 }

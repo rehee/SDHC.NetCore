@@ -12,18 +12,18 @@ using UserIdentity.Services;
 
 namespace SDHC.UserAndRoles.Services
 {
-  public class SDHCUserManager<TUser> : ISDHCUserManager where TUser : SDHCUser, new()
+  public class SDHCUserManager<TUser> : ISDHCUserManager<TUser> where TUser : SDHCUser, new()
   {
-    public ISDHCMemberService<IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo> SDHCMemberService;
-    public ISDHCSignInService< IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo> SDHCSignInService;
+    public ISDHCMemberService<TUser, IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo> SDHCMemberService;
+    public ISDHCSignInService<TUser, IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo> SDHCSignInService;
     public SDHCUserManager(
-      ISDHCMemberService<IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo> _SDHCMemberService,
-      ISDHCSignInService<IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo> _SDHCSignInService)
+      ISDHCMemberService<TUser, IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo> _SDHCMemberService,
+      ISDHCSignInService<TUser, IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo> _SDHCSignInService)
     {
       this.SDHCMemberService = _SDHCMemberService;
       this.SDHCSignInService = _SDHCSignInService;
     }
-    public async Task<IUserBase> GetUserAsnc(string loginId)
+    public async Task<TUser> GetUserAsnc(string loginId)
     {
       var user = await this.SDHCMemberService.FindByEmailAsync(loginId);
       if (user != null)
@@ -38,18 +38,20 @@ namespace SDHC.UserAndRoles.Services
       }
       return null;
     }
-    public async Task<bool> CheckLoginRequest(ILoginRequest login)
+
+
+    public async Task<TUser> CheckLoginRequest(ILoginRequest login)
     {
       var user = await this.GetUserAsnc(login.Username) as TUser;
       if (user == null)
       {
-        return false;
+        return null;
       }
       var isCorrectPassword = await this.SDHCMemberService.CheckPasswordAsync(user, login.Password);
-      return isCorrectPassword;
+      return user;
     }
 
-    public async Task<IUserBase> CreateUser(IRegisterWithNameViewModel login)
+    public async Task<TUser> CreateUser(IRegisterWithNameViewModel login)
     {
       var user = await this.GetUserAsnc(login.Email);
       if (user != null)
@@ -65,10 +67,34 @@ namespace SDHC.UserAndRoles.Services
         }
       }
       user = new TUser();
-      var result = await this.CreateUser(login);
-      return result;
+      user.Email = login.Email;
+      user.UserName = login.UserName;
+
+      var result = await SDHCMemberService.CreateAsync(user, login.Password);
+      if (result.Succeeded)
+      {
+        user = await SDHCMemberService.FindByNameAsync(user.UserName);
+        return user;
+      }
+      return null;
+    }
+
+    async Task<IUserBase> ISDHCUserManager.GetUserAsnc(string loginId)
+    {
+      return await this.GetUserAsnc(loginId);
+    }
+    async Task<IUserBase> ISDHCUserManager.CheckLoginRequest(ILoginRequest login)
+    {
+      return await this.CheckLoginRequest(login);
+    }
+    async Task<IUserBase> ISDHCUserManager.CreateUser(IRegisterWithNameViewModel login)
+    {
+      return await this.CreateUser(login);
     }
 
 
+
   }
+
+
 }

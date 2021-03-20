@@ -12,7 +12,7 @@ using UserIdentity.Services;
 namespace SDHC.UserAndRoles.Services
 {
   public class SDHCMemberService<T> :
-    ISDHCMemberService<IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo>
+    ISDHCMemberService<T, IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo>
     where T : SDHCUser, new()
   {
     private readonly UserManager<T> u;
@@ -20,93 +20,93 @@ namespace SDHC.UserAndRoles.Services
     {
       this.u = u;
     }
-    public IQueryable<IUserBase> Users => this.u.Users;
+    public IQueryable<T> Users => this.u.Users;
 
     public IEnumerable<dynamic> UserValidators => this.u.UserValidators.Select(b => b as dynamic);
 
-    public Task<IdentityResult> AccessFailedAsync(IUserBase user)
+    public Task<IdentityResult> AccessFailedAsync(T user)
     {
-      return this.u.AccessFailedAsync(user as T);
+      return this.u.AccessFailedAsync(user);
     }
 
-    public Task<IdentityResult> AddClaimAsync(IUserBase user, Claim claim)
+    public Task<IdentityResult> AddClaimAsync(T user, Claim claim)
     {
-      return u.AddClaimAsync(user as T, claim);
+      return u.AddClaimAsync(user, claim);
     }
 
-    public Task<IdentityResult> AddClaimsAsync(IUserBase user, IEnumerable<Claim> claims)
+    public Task<IdentityResult> AddClaimsAsync(T user, IEnumerable<Claim> claims)
     {
-      return u.AddClaimsAsync(user as T, claims);
+      return u.AddClaimsAsync(user, claims);
     }
 
-    public Task<IdentityResult> AddLoginAsync(IUserBase user, UserLoginInfo login)
+    public Task<IdentityResult> AddLoginAsync(T user, UserLoginInfo login)
     {
-      return u.AddLoginAsync(user as T, login);
+      return u.AddLoginAsync(user, login);
     }
 
-    public Task<IdentityResult> AddPasswordAsync(IUserBase user, string password)
+    public Task<IdentityResult> AddPasswordAsync(T user, string password)
     {
-      return u.AddPasswordAsync(user as T, password);
+      return u.AddPasswordAsync(user, password);
     }
 
-    public Task<IdentityResult> AddToRoleAsync(IUserBase user, string role)
+    public Task<IdentityResult> AddToRoleAsync(T user, string role)
     {
-      return u.AddToRoleAsync(user as T, role);
+      return u.AddToRoleAsync(user, role);
     }
 
-    public Task<IdentityResult> AddToRolesAsync(IUserBase user, IEnumerable<string> roles)
+    public Task<IdentityResult> AddToRolesAsync(T user, IEnumerable<string> roles)
     {
-      return u.AddToRolesAsync(user as T, roles);
+      return u.AddToRolesAsync(user, roles);
     }
 
-    public Task<IdentityResult> ChangeEmailAsync(IUserBase user, string newEmail, string token)
+    public Task<IdentityResult> ChangeEmailAsync(T user, string newEmail, string token)
     {
-      return u.ChangeEmailAsync(user as T, newEmail, token);
+      return u.ChangeEmailAsync(user, newEmail, token);
     }
 
-    public Task<IdentityResult> ChangePasswordAsync(IUserBase user, string currentPassword, string newPassword)
+    public Task<IdentityResult> ChangePasswordAsync(T user, string currentPassword, string newPassword)
     {
-      return u.ChangePasswordAsync(user as T, currentPassword, newPassword);
+      return u.ChangePasswordAsync(user, currentPassword, newPassword);
     }
 
-    public Task<IdentityResult> ChangePhoneNumberAsync(IUserBase user, string phoneNumber, string token)
+    public Task<IdentityResult> ChangePhoneNumberAsync(T user, string phoneNumber, string token)
     {
-      return u.ChangePhoneNumberAsync(user as T, phoneNumber, token);
+      return u.ChangePhoneNumberAsync(user, phoneNumber, token);
     }
 
-    public Task<bool> CheckPasswordAsync(IUserBase user, string password)
+    public Task<bool> CheckPasswordAsync(T user, string password)
     {
-      return u.CheckPasswordAsync(user as T, password);
+      return u.CheckPasswordAsync(user, password);
     }
 
-    public Task<IdentityResult> ConfirmEmailAsync(IUserBase user, string token)
+    public Task<IdentityResult> ConfirmEmailAsync(T user, string token)
     {
-      return u.ConfirmEmailAsync(user as T, token);
+      return u.ConfirmEmailAsync(user, token);
     }
 
-    public Task<int> CountRecoveryCodesAsync(IUserBase user)
+    public Task<int> CountRecoveryCodesAsync(T user)
     {
-      return u.CountRecoveryCodesAsync(user as T);
+      return u.CountRecoveryCodesAsync(user);
     }
 
-    public Task<IdentityResult> CreateAsync(IUserBase user)
+    public Task<IdentityResult> CreateAsync(T user)
     {
-      return u.CreateAsync(user as T);
+      return u.CreateAsync(user);
     }
 
-    public Task<IdentityResult> CreateAsync(IUserBase user, string password)
+    public Task<IdentityResult> CreateAsync(T user, string password)
     {
-      return u.CreateAsync(user as T, password);
+      return u.CreateAsync(user, password);
     }
 
-    public Task<byte[]> CreateSecurityTokenAsync(IUserBase user)
+    public Task<byte[]> CreateSecurityTokenAsync(T user)
     {
-      return u.CreateSecurityTokenAsync(user as T);
+      return u.CreateSecurityTokenAsync(user);
     }
 
-    public Task<IdentityResult> DeleteAsync(IUserBase user)
+    public Task<IdentityResult> DeleteAsync(T user)
     {
-      return u.DeleteAsync(user as T);
+      return u.DeleteAsync(user);
     }
 
     public void Dispose()
@@ -115,27 +115,27 @@ namespace SDHC.UserAndRoles.Services
       this.Dispose();
     }
 
-    public async Task<IUserBase> FindByEmailAsync(string email)
+    public async Task<T> FindByEmailAsync(string email)
     {
       return await u.FindByEmailAsync(email);
     }
 
-    public async Task<IUserBase> FindByIdAsync(string userId)
+    public async Task<T> FindByIdAsync(string userId)
     {
       return await u.FindByIdAsync(userId);
     }
 
-    public async Task<IUserBase> FindByLoginAsync(string loginProvider, string providerKey)
+    public async Task<T> FindByLoginAsync(string loginProvider, string providerKey)
     {
       return await u.FindByLoginAsync(loginProvider, providerKey);
     }
 
-    public async Task<IUserBase> FindByNameAsync(string userName)
+    public async Task<T> FindByNameAsync(string userName)
     {
       return await u.FindByNameAsync(userName);
     }
 
-    public async Task<IUserBase> GetUserAsync(ClaimsPrincipal principal)
+    public async Task<T> GetUserAsync(ClaimsPrincipal principal)
     {
       return await u.GetUserAsync(principal);
     }
@@ -145,9 +145,9 @@ namespace SDHC.UserAndRoles.Services
       return u.GetUserId(principal);
     }
 
-    public Task<string> GetUserIdAsync(IUserBase user)
+    public Task<string> GetUserIdAsync(T user)
     {
-      return u.GetUserIdAsync(user as T);
+      return u.GetUserIdAsync(user);
     }
 
     public string GetUserName(ClaimsPrincipal principal)
@@ -155,41 +155,41 @@ namespace SDHC.UserAndRoles.Services
       return u.GetUserName(principal);
     }
 
-    public Task<string> GetUserNameAsync(IUserBase user)
+    public Task<string> GetUserNameAsync(T user)
     {
-      return u.GetUserNameAsync(user as T);
+      return u.GetUserNameAsync(user);
     }
 
-    public async Task<IEnumerable<IUserBase>> GetUsersForClaimAsync(Claim claim)
+    public async Task<IEnumerable<T>> GetUsersForClaimAsync(Claim claim)
     {
       var list = await u.GetUsersForClaimAsync(claim);
       return list.Select(b => b);
     }
 
-    public async Task<IEnumerable<IUserBase>> GetUsersInRoleAsync(string roleName)
+    public async Task<IEnumerable<T>> GetUsersInRoleAsync(string roleName)
     {
       var list = await u.GetUsersInRoleAsync(roleName);
       return list.Select(b => b);
     }
 
-    public Task<string> GenerateChangeEmailTokenAsync(IUserBase user, string newEmail)
+    public Task<string> GenerateChangeEmailTokenAsync(T user, string newEmail)
     {
-      return u.GenerateChangeEmailTokenAsync(user as T, newEmail);
+      return u.GenerateChangeEmailTokenAsync(user, newEmail);
     }
 
-    public Task<string> GenerateChangePhoneNumberTokenAsync(IUserBase user, string phoneNumber)
+    public Task<string> GenerateChangePhoneNumberTokenAsync(T user, string phoneNumber)
     {
-      return u.GenerateChangePhoneNumberTokenAsync(user as T, phoneNumber);
+      return u.GenerateChangePhoneNumberTokenAsync(user, phoneNumber);
     }
 
-    public Task<string> GenerateConcurrencyStampAsync(IUserBase user)
+    public Task<string> GenerateConcurrencyStampAsync(T user)
     {
-      return u.GenerateConcurrencyStampAsync(user as T);
+      return u.GenerateConcurrencyStampAsync(user);
     }
 
-    public Task<string> GenerateEmailConfirmationTokenAsync(IUserBase user)
+    public Task<string> GenerateEmailConfirmationTokenAsync(T user)
     {
-      return u.GenerateEmailConfirmationTokenAsync(user as T);
+      return u.GenerateEmailConfirmationTokenAsync(user);
     }
 
     public string GenerateNewAuthenticatorKey()
@@ -197,114 +197,114 @@ namespace SDHC.UserAndRoles.Services
       return u.GenerateNewAuthenticatorKey();
     }
 
-    public Task<IEnumerable<string>> GenerateNewTwoFactorRecoveryCodesAsync(IUserBase user, int number)
+    public Task<IEnumerable<string>> GenerateNewTwoFactorRecoveryCodesAsync(T user, int number)
     {
-      return u.GenerateNewTwoFactorRecoveryCodesAsync(user as T, number);
+      return u.GenerateNewTwoFactorRecoveryCodesAsync(user, number);
     }
 
-    public Task<string> GeneratePasswordResetTokenAsync(IUserBase user)
+    public Task<string> GeneratePasswordResetTokenAsync(T user)
     {
-      return u.GeneratePasswordResetTokenAsync(user as T);
+      return u.GeneratePasswordResetTokenAsync(user);
     }
 
-    public Task<string> GenerateTwoFactorTokenAsync(IUserBase user, string tokenProvider)
+    public Task<string> GenerateTwoFactorTokenAsync(T user, string tokenProvider)
     {
-      return u.GenerateTwoFactorTokenAsync(user as T, tokenProvider);
+      return u.GenerateTwoFactorTokenAsync(user, tokenProvider);
     }
 
-    public Task<string> GenerateUserTokenAsync(IUserBase user, string tokenProvider, string purpose)
+    public Task<string> GenerateUserTokenAsync(T user, string tokenProvider, string purpose)
     {
-      return u.GenerateUserTokenAsync(user as T, tokenProvider, purpose);
+      return u.GenerateUserTokenAsync(user, tokenProvider, purpose);
     }
 
-    public Task<int> GetAccessFailedCountAsync(IUserBase user)
+    public Task<int> GetAccessFailedCountAsync(T user)
     {
-      return u.GetAccessFailedCountAsync(user as T);
+      return u.GetAccessFailedCountAsync(user);
     }
 
-    public Task<string> GetAuthenticationTokenAsync(IUserBase user, string loginProvider, string tokenName)
+    public Task<string> GetAuthenticationTokenAsync(T user, string loginProvider, string tokenName)
     {
-      return u.GetAuthenticationTokenAsync(user as T, loginProvider, tokenName);
+      return u.GetAuthenticationTokenAsync(user, loginProvider, tokenName);
     }
 
-    public Task<string> GetAuthenticatorKeyAsync(IUserBase user)
+    public Task<string> GetAuthenticatorKeyAsync(T user)
     {
-      return u.GetAuthenticatorKeyAsync(user as T);
+      return u.GetAuthenticatorKeyAsync(user);
     }
 
-    public Task<IList<Claim>> GetClaimsAsync(IUserBase user)
+    public Task<IList<Claim>> GetClaimsAsync(T user)
     {
-      return u.GetClaimsAsync(user as T);
+      return u.GetClaimsAsync(user);
     }
 
-    public Task<string> GetEmailAsync(IUserBase user)
+    public Task<string> GetEmailAsync(T user)
     {
-      return u.GetEmailAsync(user as T);
+      return u.GetEmailAsync(user);
     }
 
-    public Task<bool> GetLockoutEnabledAsync(IUserBase user)
+    public Task<bool> GetLockoutEnabledAsync(T user)
     {
-      return u.GetLockoutEnabledAsync(user as T);
+      return u.GetLockoutEnabledAsync(user);
     }
 
-    public Task<DateTimeOffset?> GetLockoutEndDateAsync(IUserBase user)
+    public Task<DateTimeOffset?> GetLockoutEndDateAsync(T user)
     {
-      return u.GetLockoutEndDateAsync(user as T);
+      return u.GetLockoutEndDateAsync(user);
     }
 
-    public Task<IList<UserLoginInfo>> GetLoginsAsync(IUserBase user)
+    public Task<IList<UserLoginInfo>> GetLoginsAsync(T user)
     {
-      return u.GetLoginsAsync(user as T);
+      return u.GetLoginsAsync(user);
     }
 
-    public Task<string> GetPhoneNumberAsync(IUserBase user)
+    public Task<string> GetPhoneNumberAsync(T user)
     {
-      return u.GetPhoneNumberAsync(user as T);
+      return u.GetPhoneNumberAsync(user);
     }
 
-    public Task<IList<string>> GetRolesAsync(IUserBase user)
+    public Task<IList<string>> GetRolesAsync(T user)
     {
-      return u.GetRolesAsync(user as T);
+      return u.GetRolesAsync(user);
     }
 
-    public Task<string> GetSecurityStampAsync(IUserBase user)
+    public Task<string> GetSecurityStampAsync(T user)
     {
-      return u.GetSecurityStampAsync(user as T);
+      return u.GetSecurityStampAsync(user);
     }
 
-    public Task<bool> GetTwoFactorEnabledAsync(IUserBase user)
+    public Task<bool> GetTwoFactorEnabledAsync(T user)
     {
-      return u.GetTwoFactorEnabledAsync(user as T);
+      return u.GetTwoFactorEnabledAsync(user);
     }
 
-    public Task<IList<string>> GetValidTwoFactorProvidersAsync(IUserBase user)
+    public Task<IList<string>> GetValidTwoFactorProvidersAsync(T user)
     {
-      return u.GetValidTwoFactorProvidersAsync(user as T);
+      return u.GetValidTwoFactorProvidersAsync(user);
     }
 
-    public Task<bool> HasPasswordAsync(IUserBase user)
+    public Task<bool> HasPasswordAsync(T user)
     {
-      return u.HasPasswordAsync(user as T);
+      return u.HasPasswordAsync(user);
     }
 
-    public Task<bool> IsEmailConfirmedAsync(IUserBase user)
+    public Task<bool> IsEmailConfirmedAsync(T user)
     {
-      return u.IsEmailConfirmedAsync(user as T);
+      return u.IsEmailConfirmedAsync(user);
     }
 
-    public Task<bool> IsInRoleAsync(IUserBase user, string role)
+    public Task<bool> IsInRoleAsync(T user, string role)
     {
-      return u.IsInRoleAsync(user as T, role);
+      return u.IsInRoleAsync(user, role);
     }
 
-    public Task<bool> IsLockedOutAsync(IUserBase user)
+    public Task<bool> IsLockedOutAsync(T user)
     {
-      return u.IsLockedOutAsync(user as T);
+      return u.IsLockedOutAsync(user);
     }
 
-    public Task<bool> IsPhoneNumberConfirmedAsync(IUserBase user)
+    public Task<bool> IsPhoneNumberConfirmedAsync(T user)
     {
-      return u.IsPhoneNumberConfirmedAsync(user as T);
+      return u.IsPhoneNumberConfirmedAsync(user);
     }
 
     public string NormalizeEmail(string email)
@@ -317,9 +317,9 @@ namespace SDHC.UserAndRoles.Services
       return u.NormalizeName(name);
     }
 
-    public Task<IdentityResult> RedeemTwoFactorRecoveryCodeAsync(IUserBase user, string code)
+    public Task<IdentityResult> RedeemTwoFactorRecoveryCodeAsync(T user, string code)
     {
-      return u.RedeemTwoFactorRecoveryCodeAsync(user as T, code);
+      return u.RedeemTwoFactorRecoveryCodeAsync(user, code);
     }
 
     public void RegisterTokenProvider(string providerName, dynamic provider)
@@ -327,129 +327,129 @@ namespace SDHC.UserAndRoles.Services
       u.RegisterTokenProvider(providerName, provider);
     }
 
-    public Task<IdentityResult> RemoveAuthenticationTokenAsync(IUserBase user, string loginProvider, string tokenName)
+    public Task<IdentityResult> RemoveAuthenticationTokenAsync(T user, string loginProvider, string tokenName)
     {
-      return u.RemoveAuthenticationTokenAsync(user as T, loginProvider, tokenName);
+      return u.RemoveAuthenticationTokenAsync(user, loginProvider, tokenName);
     }
 
-    public Task<IdentityResult> RemoveClaimAsync(IUserBase user, Claim claim)
+    public Task<IdentityResult> RemoveClaimAsync(T user, Claim claim)
     {
-      return u.RemoveClaimAsync(user as T, claim);
+      return u.RemoveClaimAsync(user, claim);
     }
 
-    public Task<IdentityResult> RemoveClaimsAsync(IUserBase user, IEnumerable<Claim> claims)
+    public Task<IdentityResult> RemoveClaimsAsync(T user, IEnumerable<Claim> claims)
     {
-      return u.RemoveClaimsAsync(user as T, claims);
+      return u.RemoveClaimsAsync(user, claims);
     }
 
-    public Task<IdentityResult> RemoveFromRoleAsync(IUserBase user, string role)
+    public Task<IdentityResult> RemoveFromRoleAsync(T user, string role)
     {
-      return u.RemoveFromRoleAsync(user as T, role);
+      return u.RemoveFromRoleAsync(user, role);
     }
 
-    public Task<IdentityResult> RemoveFromRolesAsync(IUserBase user, IEnumerable<string> roles)
+    public Task<IdentityResult> RemoveFromRolesAsync(T user, IEnumerable<string> roles)
     {
-      return u.RemoveFromRolesAsync(user as T, roles);
+      return u.RemoveFromRolesAsync(user, roles);
     }
 
-    public Task<IdentityResult> RemoveLoginAsync(IUserBase user, string loginProvider, string providerKey)
+    public Task<IdentityResult> RemoveLoginAsync(T user, string loginProvider, string providerKey)
     {
-      return u.RemoveLoginAsync(user as T, loginProvider, providerKey);
+      return u.RemoveLoginAsync(user, loginProvider, providerKey);
     }
 
-    public Task<IdentityResult> RemovePasswordAsync(IUserBase user)
+    public Task<IdentityResult> RemovePasswordAsync(T user)
     {
-      return u.RemovePasswordAsync(user as T);
+      return u.RemovePasswordAsync(user);
     }
 
-    public Task<IdentityResult> ReplaceClaimAsync(IUserBase user, Claim claim, Claim newClaim)
+    public Task<IdentityResult> ReplaceClaimAsync(T user, Claim claim, Claim newClaim)
     {
-      return u.ReplaceClaimAsync(user as T, claim, newClaim);
+      return u.ReplaceClaimAsync(user, claim, newClaim);
     }
 
-    public Task<IdentityResult> ResetAccessFailedCountAsync(IUserBase user)
+    public Task<IdentityResult> ResetAccessFailedCountAsync(T user)
     {
-      return u.ResetAccessFailedCountAsync(user as T);
+      return u.ResetAccessFailedCountAsync(user);
     }
 
-    public Task<IdentityResult> ResetAuthenticatorKeyAsync(IUserBase user)
+    public Task<IdentityResult> ResetAuthenticatorKeyAsync(T user)
     {
-      return u.ResetAuthenticatorKeyAsync(user as T);
+      return u.ResetAuthenticatorKeyAsync(user);
     }
 
-    public Task<IdentityResult> ResetPasswordAsync(IUserBase user, string token, string newPassword)
+    public Task<IdentityResult> ResetPasswordAsync(T user, string token, string newPassword)
     {
-      return u.ResetPasswordAsync(user as T, token, newPassword);
+      return u.ResetPasswordAsync(user, token, newPassword);
     }
 
-    public Task<IdentityResult> SetUserNameAsync(IUserBase user, string userName)
+    public Task<IdentityResult> SetUserNameAsync(T user, string userName)
     {
-      return u.SetUserNameAsync(user as T, userName);
+      return u.SetUserNameAsync(user, userName);
     }
 
-    public Task<IdentityResult> SetAuthenticationTokenAsync(IUserBase user, string loginProvider, string tokenName, string tokenValue)
+    public Task<IdentityResult> SetAuthenticationTokenAsync(T user, string loginProvider, string tokenName, string tokenValue)
     {
-      return u.SetAuthenticationTokenAsync(user as T, loginProvider, tokenName, tokenValue);
+      return u.SetAuthenticationTokenAsync(user, loginProvider, tokenName, tokenValue);
     }
 
-    public Task<IdentityResult> SetEmailAsync(IUserBase user, string email)
+    public Task<IdentityResult> SetEmailAsync(T user, string email)
     {
-      return u.SetEmailAsync(user as T, email);
+      return u.SetEmailAsync(user, email);
     }
 
-    public Task<IdentityResult> SetLockoutEnabledAsync(IUserBase user, bool enabled)
+    public Task<IdentityResult> SetLockoutEnabledAsync(T user, bool enabled)
     {
-      return u.SetLockoutEnabledAsync(user as T, enabled);
+      return u.SetLockoutEnabledAsync(user, enabled);
     }
 
-    public Task<IdentityResult> SetLockoutEndDateAsync(IUserBase user, DateTimeOffset? lockoutEnd)
+    public Task<IdentityResult> SetLockoutEndDateAsync(T user, DateTimeOffset? lockoutEnd)
     {
-      return u.SetLockoutEndDateAsync(user as T, lockoutEnd);
+      return u.SetLockoutEndDateAsync(user, lockoutEnd);
     }
 
-    public Task<IdentityResult> SetPhoneNumberAsync(IUserBase user, string phoneNumber)
+    public Task<IdentityResult> SetPhoneNumberAsync(T user, string phoneNumber)
     {
-      return u.SetPhoneNumberAsync(user as T, phoneNumber);
+      return u.SetPhoneNumberAsync(user, phoneNumber);
     }
 
-    public Task<IdentityResult> SetTwoFactorEnabledAsync(IUserBase user, bool enabled)
+    public Task<IdentityResult> SetTwoFactorEnabledAsync(T user, bool enabled)
     {
-      return u.SetTwoFactorEnabledAsync(user as T, enabled);
+      return u.SetTwoFactorEnabledAsync(user, enabled);
     }
 
-    public Task<IdentityResult> UpdateAsync(IUserBase user)
+    public Task<IdentityResult> UpdateAsync(T user)
     {
-      return u.UpdateAsync(user as T);
+      return u.UpdateAsync(user);
     }
 
-    public Task UpdateNormalizedEmailAsync(IUserBase user)
+    public Task UpdateNormalizedEmailAsync(T user)
     {
-      return u.UpdateNormalizedEmailAsync(user as T);
+      return u.UpdateNormalizedEmailAsync(user);
     }
 
-    public Task UpdateNormalizedUserNameAsync(IUserBase user)
+    public Task UpdateNormalizedUserNameAsync(T user)
     {
-      return u.UpdateNormalizedUserNameAsync(user as T);
+      return u.UpdateNormalizedUserNameAsync(user);
     }
 
-    public Task<IdentityResult> UpdateSecurityStampAsync(IUserBase user)
+    public Task<IdentityResult> UpdateSecurityStampAsync(T user)
     {
-      return u.UpdateSecurityStampAsync(user as T);
+      return u.UpdateSecurityStampAsync(user);
     }
 
-    public Task<bool> VerifyChangePhoneNumberTokenAsync(IUserBase user, string token, string phoneNumber)
+    public Task<bool> VerifyChangePhoneNumberTokenAsync(T user, string token, string phoneNumber)
     {
-      return u.VerifyChangePhoneNumberTokenAsync(user as T, token, phoneNumber);
+      return u.VerifyChangePhoneNumberTokenAsync(user, token, phoneNumber);
     }
 
-    public Task<bool> VerifyTwoFactorTokenAsync(IUserBase user, string tokenProvider, string token)
+    public Task<bool> VerifyTwoFactorTokenAsync(T user, string tokenProvider, string token)
     {
-      return u.VerifyTwoFactorTokenAsync(user as T, tokenProvider, token);
+      return u.VerifyTwoFactorTokenAsync(user, tokenProvider, token);
     }
 
-    public Task<bool> VerifyUserTokenAsync(IUserBase user, string tokenProvider, string purpose, string token)
+    public Task<bool> VerifyUserTokenAsync(T user, string tokenProvider, string purpose, string token)
     {
-      return u.VerifyUserTokenAsync(user as T, tokenProvider, purpose, token);
+      return u.VerifyUserTokenAsync(user, tokenProvider, purpose, token);
     }
   }
 }

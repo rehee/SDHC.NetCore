@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Common.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -21,12 +24,12 @@ namespace SDHC.JWT.Controllers
   public class AuthenticateController : Controller
   {
     private readonly IAuthenticateService authenticateService;
-    private readonly ISDHCUserManager u;
 
-    public AuthenticateController(IAuthenticateService authenticateService, ISDHCUserManager u)
+
+    public AuthenticateController(IAuthenticateService authenticateService)
     {
       this.authenticateService = authenticateService;
-      this.u = u;
+
     }
 
 
@@ -35,21 +38,41 @@ namespace SDHC.JWT.Controllers
     {
       return Content("123");
     }
-    [HttpPost]
-    public async Task<IActionResult> Login([FromBody] LoginItem request)
+    [HttpPost("Login")]
+    public async Task<IActionResult> Login(object obj)
     {
       try
       {
-        var a = await u.CheckLoginRequest(request);
-        var isSuccess = authenticateService.IsAuthenticated(request, out var token);
-        return StatusCode(200, new { isSuccess = isSuccess, token = token });
+        var c = obj.ToIDictionary();
+        var a = TypeMixer<object>.ExtendWith<ILoginRequest>(c);
+        var isSuccess = await authenticateService.IsAuthenticated(a);
+        return StatusCode(200, new { isSuccess = isSuccess.isSuccess, token = isSuccess.token });
       }
       catch (Exception ex)
       {
-        var isSuccess = authenticateService.IsAuthenticated(request, out var token);
         return StatusCode(500, new { isSuccess = false, token = "" });
       }
+    }
 
+
+
+
+    [HttpPost("Create")]
+    public async Task<IActionResult> Create(object obj)
+    {
+      try
+      {
+
+        var c = obj.ToIDictionary();
+        dynamic MyDynamic = new System.Dynamic.ExpandoObject();
+        var a = TypeMixer<object>.ExtendWith<IRegisterWithNameViewModel>(c);
+        var isSuccess = await authenticateService.CreateUser(a);
+        return StatusCode(200, new { isSuccess = isSuccess.isSuccess, user = isSuccess.user });
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { isSuccess = false, user = "" });
+      }
     }
   }
 }

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace UserIdentity.Services
 {
-  public interface ISDHCSignInService<IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo>
+  public interface ISDHCSignInService<TUser, IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo>
   {
-    Task<bool> CanSignInAsync(IUserBase user);
-    Task<SignInResult> CheckPasswordSignInAsync(IUserBase user, string password, bool lockoutOnFailure);
+    Task<bool> CanSignInAsync(TUser user);
+    Task<SignInResult> CheckPasswordSignInAsync(TUser user, string password, bool lockoutOnFailure);
     Task<dynamic> GetTwoFactorAuthenticationUserAsync();
-    Task<bool> IsTwoFactorClientRememberedAsync(IUserBase user);
-    Task<ClaimsPrincipal> CreateUserPrincipalAsync(IUserBase user);
+    Task<bool> IsTwoFactorClientRememberedAsync(TUser user);
+    Task<ClaimsPrincipal> CreateUserPrincipalAsync(TUser user);
 
 
     AuthenticationProperties ConfigureExternalAuthenticationProperties(string provider, string redirectUrl, string userId = null);
@@ -24,21 +24,21 @@ namespace UserIdentity.Services
     bool IsSignedIn(ClaimsPrincipal principal);
 
     Task<SignInResult> PasswordSignInAsync(string userName, string password, bool isPersistent, bool lockoutOnFailure);
-    Task<SignInResult> PasswordSignInAsync(IUserBase user, string password, bool isPersistent, bool lockoutOnFailure);
-    Task RefreshSignInAsync(IUserBase user);
-    Task RememberTwoFactorClientAsync(IUserBase user);
-    Task SignInAsync(IUserBase user, bool isPersistent, string authenticationMethod = null);
+    Task<SignInResult> PasswordSignInAsync(TUser user, string password, bool isPersistent, bool lockoutOnFailure);
+    Task RefreshSignInAsync(TUser user);
+    Task RememberTwoFactorClientAsync(TUser user);
+    Task SignInAsync(TUser user, bool isPersistent, string authenticationMethod = null);
 
-    Task SignInAsync(IUserBase user, AuthenticationProperties authenticationProperties, string authenticationMethod = null);
-    Task SignInWithClaimsAsync(IUserBase user, AuthenticationProperties authenticationProperties, IEnumerable<Claim> additionalClaims);
-    Task SignInWithClaimsAsync(IUserBase user, bool isPersistent, IEnumerable<Claim> additionalClaims);
+    Task SignInAsync(TUser user, AuthenticationProperties authenticationProperties, string authenticationMethod = null);
+    Task SignInWithClaimsAsync(TUser user, AuthenticationProperties authenticationProperties, IEnumerable<Claim> additionalClaims);
+    Task SignInWithClaimsAsync(TUser user, bool isPersistent, IEnumerable<Claim> additionalClaims);
     Task SignOutAsync();
     Task<SignInResult> TwoFactorAuthenticatorSignInAsync(string code, bool isPersistent, bool rememberClient);
     Task<SignInResult> TwoFactorRecoveryCodeSignInAsync(string recoveryCode);
     Task<SignInResult> TwoFactorSignInAsync(string provider, string code, bool isPersistent, bool rememberClient);
     Task<IdentityResult> UpdateExternalAuthenticationTokensAsync(ExternalLoginInfo externalLogin);
-    Task<IUserBase> ValidateSecurityStampAsync(ClaimsPrincipal principal);
-    Task<bool> ValidateSecurityStampAsync(IUserBase user, string securityStamp);
-    Task<IUserBase> ValidateTwoFactorSecurityStampAsync(ClaimsPrincipal principal);
+    Task<TUser> ValidateSecurityStampAsync(ClaimsPrincipal principal);
+    Task<bool> ValidateSecurityStampAsync(TUser user, string securityStamp);
+    Task<TUser> ValidateTwoFactorSecurityStampAsync(ClaimsPrincipal principal);
   }
 }
