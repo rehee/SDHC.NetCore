@@ -2,7 +2,24 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>SDHC</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Areas\Admin\wwwroot\css\bootstrap\bootstrap.min.css" />
+    <Content Include="Areas\Admin\wwwroot\css\bootstrap\bootstrap.min.css.map" />
+    <Content Include="Areas\Admin\wwwroot\css\open-iconic\FONT-LICENSE" />
+    <Content Include="Areas\Admin\wwwroot\css\open-iconic\font\css\open-iconic-bootstrap.min.css" />
+    <Content Include="Areas\Admin\wwwroot\css\open-iconic\font\fonts\open-iconic.eot" />
+    <Content Include="Areas\Admin\wwwroot\css\open-iconic\font\fonts\open-iconic.otf" />
+    <Content Include="Areas\Admin\wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
+    <Content Include="Areas\Admin\wwwroot\css\open-iconic\font\fonts\open-iconic.ttf" />
+    <Content Include="Areas\Admin\wwwroot\css\open-iconic\font\fonts\open-iconic.woff" />
+    <Content Include="Areas\Admin\wwwroot\css\open-iconic\ICON-LICENSE" />
+    <Content Include="Areas\Admin\wwwroot\css\open-iconic\README.md" />
+    <Content Include="Areas\Admin\wwwroot\css\site.css" />
+    <Content Include="Areas\Admin\wwwroot\favicon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.13" />

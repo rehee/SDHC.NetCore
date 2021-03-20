@@ -9,13 +9,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{6D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDHC.JWT", "Services\SDHC.JWT\SDHC.JWT.csproj", "{CCD20B1F-53AF-4620-B652-0DB6C46FD80D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDHC.UserAndRoles", "Services\SDHC.UserAndRoles\SDHC.UserAndRoles.csproj", "{4DD064FD-F55E-4231-8880-5158837FC41A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDHC.UserAndRoles", "Services\SDHC.UserAndRoles\SDHC.UserAndRoles.csproj", "{4DD064FD-F55E-4231-8880-5158837FC41A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shareds", "Shareds", "{63DEE9CE-4EA9-424B-82F0-CC57ECD82498}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Shareds\Common\Common.csproj", "{02FE6119-38FA-4E3B-AE3C-B77D3298BECF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Shareds\Common\Common.csproj", "{02FE6119-38FA-4E3B-AE3C-B77D3298BECF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserIdentity", "Shareds\UserIdentity\UserIdentity.csproj", "{863BE5D8-5909-4A09-96CF-CBA967F28AC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserIdentity", "Shareds\UserIdentity\UserIdentity.csproj", "{863BE5D8-5909-4A09-96CF-CBA967F28AC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

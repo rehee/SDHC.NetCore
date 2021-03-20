@@ -33,6 +33,9 @@ namespace SDHC
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllers();
+      services.AddRazorPages();
+      services.AddServerSideBlazor();
+
       Action<DbContextOptionsBuilder> dbAction = options =>
       {
         options.UseSqlServer(
@@ -65,16 +68,25 @@ namespace SDHC
       }
 
       app.UseAuthentication();
-
+      app.UseStaticFiles();
       app.UseRouting();
 
       app.UseAuthorization();
 
       app.UseEndpoints(endpoints =>
       {
+        endpoints.MapAreaControllerRoute(
+                  name: "AdminArea",
+                  areaName: "Admin",
+                  pattern: "Admin/{controller=AdminHome}/{action=Index}/{id?}");
+
+        endpoints.MapBlazorHub();
+        endpoints.MapFallbackToAreaPage("~/Admin/{*clientroutes:nonfile}", "/_Host", "Admin");
+
         endpoints.MapControllerRoute(
           name: "default",
           pattern: "{controller=Home}/{action=Index}/{id?}");
+
       });
     }
   }
