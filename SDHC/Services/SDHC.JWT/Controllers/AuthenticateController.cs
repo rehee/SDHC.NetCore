@@ -25,19 +25,11 @@ namespace SDHC.JWT.Controllers
   {
     private readonly IAuthenticateService authenticateService;
 
-
     public AuthenticateController(IAuthenticateService authenticateService)
     {
       this.authenticateService = authenticateService;
-
     }
 
-
-    [HttpGet]
-    public IActionResult Index()
-    {
-      return Content("123");
-    }
     [HttpPost("Login")]
     public async Task<IActionResult> Login(object obj)
     {
@@ -54,15 +46,11 @@ namespace SDHC.JWT.Controllers
       }
     }
 
-
-
-
     [HttpPost("Create")]
     public async Task<IActionResult> Create(object obj)
     {
       try
       {
-
         var c = obj.ToIDictionary();
         dynamic MyDynamic = new System.Dynamic.ExpandoObject();
         var a = TypeMixer<object>.ExtendWith<IRegisterWithNameViewModel>(c);
