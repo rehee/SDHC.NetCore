@@ -51,12 +51,13 @@ namespace SDHC
         .AddEntityFrameworkStores<MyDBContext>()
         .AddDefaultTokenProviders();
       services.AddScoped<RoleManager<IdentityRole>>();
-
       services.AddScoped(typeof(ISDHCMemberService<SDHCUser, IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo>), typeof(SDHCMemberService<SDHCUser>));
       services.AddScoped(typeof(ISDHCSignInService<SDHCUser, IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo>), typeof(SDHCSignInService<SDHCUser>));
       services.AddScoped<ISDHCUserManager<SDHCUser>, SDHCUserManager<SDHCUser>>();
       services.AddScoped<ISDHCUserManager, SDHCUserManager<SDHCUser>>();
       StartUpFunction.ConfigureServices<SDHCUserManager<SDHCUser>>(Configuration, services);
+
+
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

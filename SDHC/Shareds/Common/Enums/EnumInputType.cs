@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Common.Enums
+namespace System
 {
   public enum EnumInputType
   {

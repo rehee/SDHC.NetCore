@@ -37,4 +37,8 @@
     <ProjectReference Include="..\Shareds\UserIdentity\UserIdentity.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Shared\Components\" />
+  </ItemGroup>
+
 </Project>

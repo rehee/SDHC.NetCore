@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Common.Attributes
+namespace System
 {
   public class BasePropertyAttribute : Attribute
   {
@@ -25,5 +25,13 @@ namespace Common.Attributes
 
     }
     public string[] KeyAndDisplayNames { get; set; }
+  }
+  public class ConfigAttribute : Attribute
+  {
+
+  }
+  public class FileReadAttribute : Attribute
+  {
+    public string ReadRoles { get; set; }
   }
 }

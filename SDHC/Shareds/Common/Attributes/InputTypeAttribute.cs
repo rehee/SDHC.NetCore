@@ -1,9 +1,4 @@
-﻿using Common.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Common.Attributes
+﻿namespace System
 {
   public class InputTypeAttribute : Attribute, IInputCommon
   {

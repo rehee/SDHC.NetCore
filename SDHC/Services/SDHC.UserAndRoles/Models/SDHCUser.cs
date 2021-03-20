@@ -1,10 +1,6 @@
-﻿using Common.Attributes;
-using Common.Enums;
-using Common.Models;
+﻿using Common.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SDHC.UserAndRoles.Models
 {
