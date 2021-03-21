@@ -1,5 +1,27 @@
 ﻿@page "/Admin"
+<p>@ttt</p>
+<hr />
+<ul>
+  @for (int x = 1; x < 6; x++)
+  {
+    <li>
+      <Test ClickedText="x" ClickedFunction="Click" />
+    </li>
+  }
+</ul>
 
-<h1>Hello, world!</h1>
 
-Welcome to your Home index
+
+@code{
+  private string ttt { get; set; }
+
+
+
+  private void Click(int input)
+  {
+    ttt = input.ToString();
+
+    StateHasChanged();
+
+  }
+}

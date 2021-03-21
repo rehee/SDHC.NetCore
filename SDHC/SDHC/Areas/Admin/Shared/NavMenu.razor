@@ -4,7 +4,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 </div>
-
+@Title
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
   
 </div>
@@ -18,4 +18,7 @@
   {
     collapseNavMenu = !collapseNavMenu;
   }
+
+  [Parameter]
+  public string Title { get; set; }
 }

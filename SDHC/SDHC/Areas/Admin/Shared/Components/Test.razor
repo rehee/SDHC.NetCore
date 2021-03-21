@@ -1,0 +1,15 @@
+﻿@ClickedText
+<button @onclick='Click'>this is button</button>
+
+@code {
+
+  private void Click()
+  {
+    ClickedFunction(ClickedText);
+  }
+
+  [Parameter]
+  public int ClickedText { get; set; }
+  [Parameter]
+  public Action<int> ClickedFunction { get; set; }
+}

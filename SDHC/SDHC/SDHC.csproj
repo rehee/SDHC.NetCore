@@ -6,19 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Areas\Admin\wwwroot\css\bootstrap\bootstrap.min.css" />
-    <Content Include="Areas\Admin\wwwroot\css\bootstrap\bootstrap.min.css.map" />
-    <Content Include="Areas\Admin\wwwroot\css\open-iconic\FONT-LICENSE" />
-    <Content Include="Areas\Admin\wwwroot\css\open-iconic\font\css\open-iconic-bootstrap.min.css" />
-    <Content Include="Areas\Admin\wwwroot\css\open-iconic\font\fonts\open-iconic.eot" />
-    <Content Include="Areas\Admin\wwwroot\css\open-iconic\font\fonts\open-iconic.otf" />
-    <Content Include="Areas\Admin\wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
-    <Content Include="Areas\Admin\wwwroot\css\open-iconic\font\fonts\open-iconic.ttf" />
-    <Content Include="Areas\Admin\wwwroot\css\open-iconic\font\fonts\open-iconic.woff" />
-    <Content Include="Areas\Admin\wwwroot\css\open-iconic\ICON-LICENSE" />
-    <Content Include="Areas\Admin\wwwroot\css\open-iconic\README.md" />
-    <Content Include="Areas\Admin\wwwroot\css\site.css" />
-    <Content Include="Areas\Admin\wwwroot\favicon.ico" />
+    <Content Include="css\bootstrap\bootstrap.min.css" />
+    <Content Include="css\bootstrap\bootstrap.min.css.map" />
+    <Content Include="css\open-iconic\FONT-LICENSE" />
+    <Content Include="css\open-iconic\font\css\open-iconic-bootstrap.min.css" />
+    <Content Include="css\open-iconic\font\fonts\open-iconic.eot" />
+    <Content Include="css\open-iconic\font\fonts\open-iconic.otf" />
+    <Content Include="css\open-iconic\font\fonts\open-iconic.svg" />
+    <Content Include="css\open-iconic\font\fonts\open-iconic.ttf" />
+    <Content Include="css\open-iconic\font\fonts\open-iconic.woff" />
+    <Content Include="css\open-iconic\ICON-LICENSE" />
+    <Content Include="css\open-iconic\README.md" />
+    <Content Include="css\site.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,10 +34,6 @@
     <ProjectReference Include="..\Services\SDHC.UserAndRoles\SDHC.UserAndRoles.csproj" />
     <ProjectReference Include="..\Shareds\Common\Common.csproj" />
     <ProjectReference Include="..\Shareds\UserIdentity\UserIdentity.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Shared\Components\" />
   </ItemGroup>
 
 </Project>
