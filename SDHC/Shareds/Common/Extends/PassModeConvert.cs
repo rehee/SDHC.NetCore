@@ -1,6 +1,6 @@
 ﻿using Common.Models;
 using Common.Services.SecretServices;
-using SDHC.Common.Cruds;
+using Common.Cruds;
 using System;
 using System.Collections.Generic;
 using System.Linq;

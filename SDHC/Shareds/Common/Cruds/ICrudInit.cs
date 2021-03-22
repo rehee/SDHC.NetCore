@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SDHC.Common.Cruds
+namespace Common.Cruds
 {
   public interface ICrudInit
   {

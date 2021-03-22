@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
-using SDHC.Common.Configs;
+using Common.Configs;
 using System;
 using System.Collections.Generic;
 using System.Text;

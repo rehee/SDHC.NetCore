@@ -1,0 +1,16 @@
+﻿@using Common.Models.ViewModels
+@if (NavItems != null)
+{
+  <nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      @foreach (var item in NavItems)
+      {
+        <SiderMenuItem @key="item" Item="item"></SiderMenuItem>
+      }
+    </ul>
+  </nav>
+  @code{
+    [Parameter]
+    public IEnumerable<INavigationItem> NavItems { get; set; }
+  }
+}

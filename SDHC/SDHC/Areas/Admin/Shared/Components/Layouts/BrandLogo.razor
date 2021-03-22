@@ -1,0 +1,9 @@
+﻿@using Common.Models.ViewModels
+<a href="@(Item?.Url??"/")" class="brand-link">
+  <img src="@(Item?.Image??"")" alt="@(Item?.ALT??"")" class="brand-image img-circle elevation-3" style="opacity: .8">
+  <span class="brand-text font-weight-light">@(Item?.DisplayText??"")</span>
+</a>
+@code{
+  [Parameter]
+  public IBrandLogo Item { get; set; }
+}

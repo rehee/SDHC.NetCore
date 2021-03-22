@@ -1,0 +1,31 @@
+﻿@using Common.Models.ViewModels
+@inherits LayoutComponentBase
+
+<div class="wrapper">
+  @if (RootModel != null)
+  {
+    <NavMenu Model="RootModel.HeaderNavigationItems"></NavMenu>
+    <MainSideBar Model="RootModel.SiderBar"></MainSideBar>
+  }
+
+  <div class="content-wrapper">
+    <CascadingValue Value="this">
+      @Body
+    </CascadingValue>
+  </div>
+  @if (RootModel != null)
+  {
+    <Footer Model="RootModel.CopyRignt"></Footer>
+  }
+
+</div>
+
+@code{
+  public IRootViewModel RootModel { get; set; }
+
+  public void Refresh()
+  {
+    StateHasChanged();
+  }
+}
+

@@ -1,6 +1,6 @@
 ﻿using Common.Models;
 using Common.Models.ViewModels;
-using SDHC.Common.Cruds;
+using Common.Cruds;
 using System.Linq;
 using System.Threading.Tasks;
 

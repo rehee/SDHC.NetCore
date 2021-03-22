@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SDHC.Common.Configs
+namespace Common.Configs
 {
   public class AdminControl
   {

@@ -1,6 +1,6 @@
 ﻿using Common.Models;
 using Common.Services.ModelServices;
-using SDHC.Common.Configs;
+using Common.Configs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

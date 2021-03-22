@@ -36,4 +36,8 @@
     <ProjectReference Include="..\Shareds\UserIdentity\UserIdentity.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Pages\NewFolder\" />
+  </ItemGroup>
+
 </Project>

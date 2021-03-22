@@ -1,5 +1,5 @@
 ﻿using Common.Models;
-using SDHC.Common.Cruds;
+using Common.Cruds;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;

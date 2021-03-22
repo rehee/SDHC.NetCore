@@ -1,4 +1,4 @@
-﻿using SDHC.Common.Configs;
+﻿using Common.Configs;
 using System;
 using System.Collections.Generic;
 using System.IO;

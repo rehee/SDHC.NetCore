@@ -2,7 +2,7 @@
 using Common.Models.ViewModels;
 using System.Threading.Tasks;
 
-namespace SDHC.Common.Cruds
+namespace Common.Cruds
 {
   public interface ICrudModel : ICrud
   {

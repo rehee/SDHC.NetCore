@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace SDHC.Common.Cruds
+namespace Common.Cruds
 {
   public interface ICrudContent : ICrudModel
   {

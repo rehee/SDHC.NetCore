@@ -1,27 +1,79 @@
 ﻿@page "/Admin"
-<p>@ttt</p>
-<hr />
-<ul>
-  @for (int x = 1; x < 6; x++)
-  {
-    <li>
-      <Test ClickedText="x" ClickedFunction="Click" />
-    </li>
-  }
-</ul>
-
-
+@page "/Admin/Page"
+@page "/Admin/Page/{id:int}"
+@layout _Content
+@using Common.Models.ViewModels
+@inject NavigationManager NavigationManager
 
 @code{
   private string ttt { get; set; }
 
-
+  [Parameter]
+  public int id { get; set; }
 
   private void Click(int input)
   {
     ttt = input.ToString();
-
     StateHasChanged();
+  }
+  [CascadingParameter]
+  protected _Content Layout { get; set; }
+
+  protected override void OnInitialized()
+  {
+
+    base.OnInitialized();
+    NavigationManager.LocationChanged += LocationChanged;
+    Layout.MainLayout.Root.RootModel = new BaseRootViewModel()
+    {
+      HeaderNavigationItems = new List<INavigationItem>(){
+        new BaseNavigationItem()
+        {
+          DisplayName = "Home",
+          Url = "/Admin",
+          Icon = "fa-tachometer-alt",
+          ActiveFullPath = true,
+        }
+      },
+      SiderBar = new BaseAdminSideBarViewModel()
+      {
+        NavItems = new List<INavigationItem>(){
+        new BaseNavigationItem()
+        {
+          DisplayName = "DashBoard",
+          Url = "/Admin",
+          Icon = "fa-tachometer-alt",
+          ActiveFullPath = true,
+        }
+      },
+        Logo = new BaseBrandLogo()
+        {
+          Url = "/Admin",
+          DisplayText = "SDHC",
+          Image = "/admin/dist/img/AdminLTELogo.png"
+        },
+        User = new BaseUserBrief()
+        {
+          Alt = "User Image",
+          Avatar = "/Admin/dist/img/user2-160x160.jpg",
+          DisplayName = "Alexander Pierce"
+        }
+      }
+    };
+    Layout.MainLayout.Root.Refresh();
 
   }
+
+  void LocationChanged(object sender, LocationChangedEventArgs e)
+  {
+    Layout.PageId = id;
+    Layout.Refresh();
+  }
+
+  void Dispose()
+  {
+    // Unsubscribe from the event when our component is disposed
+    NavigationManager.LocationChanged -= LocationChanged;
+  }
+
 }

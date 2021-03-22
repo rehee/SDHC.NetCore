@@ -1,4 +1,4 @@
-﻿using SDHC.Common.Cruds;
+﻿using Common.Cruds;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;

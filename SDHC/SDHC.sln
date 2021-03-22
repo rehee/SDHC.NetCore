@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Shareds\Common\Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserIdentity", "Shareds\UserIdentity\UserIdentity.csproj", "{863BE5D8-5909-4A09-96CF-CBA967F28AC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.NetCore", "Shareds\Common.NetCore\Common.NetCore.csproj", "{C7F9F753-F6DF-459D-B21A-FBFACA20911A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.NetCore", "Shareds\Common.NetCore\Common.NetCore.csproj", "{C7F9F753-F6DF-459D-B21A-FBFACA20911A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

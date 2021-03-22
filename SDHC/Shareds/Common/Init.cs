@@ -2,8 +2,8 @@
 using Common.Models.ViewModels;
 using Common.Services.ModelServices;
 using Common.Services.SecretServices;
-using SDHC.Common.Configs;
-using SDHC.Common.Cruds;
+using Common.Configs;
+using Common.Cruds;
 using System;
 using System.Collections.Generic;
 using System.Text;
