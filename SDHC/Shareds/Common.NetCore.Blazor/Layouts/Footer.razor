@@ -1,0 +1,11 @@
+﻿@inherits FooterBase
+<footer class="main-footer">
+  @if (Model?.ShowVersion ?? false)
+  {
+    <div class="float-right d-none d-sm-block">
+      <b>Version</b> @Model?.Version
+    </div>
+  }
+
+  <strong>Copyright &copy; @Model?.CopyRightTime <a href="@Model?.Url">@Model?.DisplayName</a>.</strong> @Model?.Text
+</footer>

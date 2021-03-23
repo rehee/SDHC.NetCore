@@ -1,0 +1,26 @@
+﻿@inherits ContentLayoutBase
+@layout MainLayout
+
+<div class="row">
+  <div class="col-md-3">
+    <ListGroupCard Model="ContentList"></ListGroupCard>
+  </div>
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-header p-2">
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <NavLink class="nav-link" href="@url" ActiveClass="active" Match="NavLinkMatch.All">
+              Edit
+            </NavLink>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <CascadingValue Value="this">
+          @Body
+        </CascadingValue>
+      </div>
+    </div>
+  </div>
+</div>

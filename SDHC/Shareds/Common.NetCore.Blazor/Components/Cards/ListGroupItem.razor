@@ -1,0 +1,59 @@
+﻿@inherits SDHCComponentBase
+@inject NavigationManager nav
+
+<li class="@(active?"list-group-item active":"list-group-item")">
+  <NavLink class="" href="@Model.Url" ActiveClass="active" Match="NavLinkMatch.Prefix">
+    @Model.DisplayName
+  </NavLink>
+  @if (Model.ShowBadge)
+  {
+    foreach (var b in Model.Badges)
+    {
+      <span @key="b" class="badge @(b.Icon??"bg-primary") float-right">
+        @if (b.IsLink)
+        {
+          <NavLink class="" href="@b.Url">
+            @b.Value
+          </NavLink>
+        }
+        else
+        {
+          <text>
+            @b.Value
+          </text>
+        }
+      </span>
+    }
+  }
+
+</li>
+@code{
+  [Parameter]
+  public IListGroupCardItemViewModel Model { get; set; }
+  [Parameter]
+  public string CurrentUrl { get; set; }
+
+  private bool active { get; set; }
+  private string currentUrl { get; set; }
+
+  protected override void OnInitialized()
+  {
+    nav.LocationChanged += LocationChanged;
+    currentUrl = $"{nav.BaseUri.Substring(0, nav.BaseUri.Length - 1)}{Model?.Url ?? "/"}";
+    this.active = nav.Uri.IndexOf(currentUrl, StringComparison.InvariantCultureIgnoreCase) == 0;
+  }
+  void LocationChanged(object sender, LocationChangedEventArgs e)
+  {
+    var isActive = !String.IsNullOrWhiteSpace(e.Location) && e.Location.IndexOf(currentUrl, StringComparison.InvariantCultureIgnoreCase) == 0;
+    if (this.active != isActive)
+    {
+      this.active = isActive;
+      StateHasChanged();
+    }
+
+  }
+  void Dispose()
+  {
+    nav.LocationChanged -= LocationChanged;
+  }
+}

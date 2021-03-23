@@ -1,0 +1,13 @@
+﻿@inherits BreadCrumbBase
+@if (Models != null)
+{
+  <ol class="breadcrumb float-sm-right">
+
+    @foreach (var item in Models)
+    {
+      <li @key="item" class="breadcrumb-item">
+        <a href="@item.Url" class="@(item.IsActive?"active":"")">@item.DisplayName</a>
+      </li>
+    }
+  </ol>
+}

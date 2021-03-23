@@ -1,0 +1,40 @@
+﻿@namespace Common.NetCore.Blazor.Layouts
+@inherits SiderMenuItemBase
+ 
+<li class="@(Item.IsNavHeader?"nav-header":"nav-item") @(isChildrenActive?"menu-is-opening menu-open":"")">
+  @if (!Item.IsNavHeader)
+  {
+    <NavLink href="@Item.Url" class="nav-link" activeClassName="selectedLink"
+             Match="@(Item.ActiveFullPath?NavLinkMatch.All:NavLinkMatch.Prefix)">
+      <i class="nav-icon fas @Item.Icon"></i>
+      <p>
+        @Item.DisplayName
+        @if (Item.HasBadge)
+        {
+          <span class="badge @Item.Badge right">
+            @Item.BadgeValue
+          </span>
+        }
+        @if (Item.HasSubNavigationItem)
+        {
+          <i class="fas fa-angle-left right"></i>
+        }
+
+      </p>
+    </NavLink>
+    @if (Item.HasSubNavigationItem)
+    {
+      <ul class="nav nav-treeview">
+        @foreach (var item in Item.SubNavigationItem)
+        {
+          <SiderMenuItem @key="item" Item="item" ItemIsActived="itemIsActived"></SiderMenuItem>
+        }
+      </ul>
+    }
+  }
+  else
+  {
+    <text>@Item.DisplayName.ToUpper()</text>
+  }
+</li>
+

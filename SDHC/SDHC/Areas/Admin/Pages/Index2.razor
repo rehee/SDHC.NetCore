@@ -1,0 +1,65 @@
+﻿@page "/Admin/Page/List"
+@page "/Admin/Page/{id:long}/List"
+@layout ContentLayout
+@using Common.Models.ViewModels
+@using Common.Services.ContentServices
+
+@inject IContentService service
+@code{
+  private string ttt { get; set; }
+
+  [Parameter]
+  public long? id { get; set; }
+  private long? thisId { get; set; }
+
+  private void Click(int input)
+  {
+    ttt = input.ToString();
+    StateHasChanged();
+  }
+  [CascadingParameter]
+  protected ContentLayout Layout { get; set; }
+
+  protected override void OnInitialized()
+  {
+    getParentId();
+  }
+
+  private void getParentId()
+  {
+    long? parentId;
+    if (thisId == null || thisId == 0)
+    {
+      parentId = null;
+    }
+    else
+    {
+      var page = service.GetContent(thisId);
+      if (page == null)
+      {
+        parentId = null;
+      }
+      else
+      {
+        parentId = (page.ParentId.HasValue && page.ParentId.Value >= 0) ? page.ParentId : null;
+      }
+    }
+    if (parentId != Layout.ParentId)
+    {
+      Layout.ParentId = parentId;
+      Layout.RefreshList();
+    }
+
+  }
+
+  protected override void OnParametersSet()
+  {
+    if (thisId != id)
+    {
+      thisId = id;
+     
+      getParentId();
+    }
+
+  }
+}

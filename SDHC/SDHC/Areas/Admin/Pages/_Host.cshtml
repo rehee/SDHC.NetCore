@@ -1,8 +1,9 @@
-﻿@page "/Admin"
+﻿@page "/{area}"
 @namespace SDHC.Areas.Admin.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
   Layout = null;
+  var _root = Common.NetCore.Blazor.Program.WWWRoot;
 }
 
 <!DOCTYPE html>
@@ -15,11 +16,11 @@
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="/Admin/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="@_root/plugins/fontawesome-free/css/all.min.css">
   <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="/Admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <link rel="stylesheet" href="@_root/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="/Admin/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="@_root/css/adminlte.min.css">
   <style>
     .nav-sidebar .menu-open > .nav-treeview {
       display: block !important;
@@ -32,15 +33,15 @@
   </app>
   <!-- ./wrapper -->
   <!-- jQuery -->
-  <script src="/Admin/plugins/jquery/jquery.min.js"></script>
+  <script src="@_root/plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->
-  <script src="/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="@_root/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- overlayScrollbars -->
-  <script src="/Admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <script src="@_root/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
   <!-- AdminLTE App -->
-  <script src="/Admin/dist/js/adminlte.min.js"></script>
+  <script src="@_root/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
-  <script src="/Admin/dist/js/demo.js"></script>
+  <script src="@_root/js/demo.js"></script>
   <div id="blazor-error-ui">
     <environment include="Staging,Production">
       An error has occurred. This application may no longer respond until reloaded.

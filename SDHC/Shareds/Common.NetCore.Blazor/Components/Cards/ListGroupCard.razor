@@ -1,0 +1,46 @@
+﻿<style>
+  .list-group-item.active > a.active {
+    color: white;
+  }
+</style>
+@if (Model != null)
+{
+  if (Model.ShowHeaderButton)
+  {
+    <NavLink href="@Model.HeaderButton?.Url"
+             class="@(Model.IsLoading?"btn btn-primary btn-block mb-3  disabled":"btn btn-primary btn-block mb-3 ")">
+      @if (Model.HeaderButton?.ShowIcon ?? false)
+      {
+        <i class="fas @Model.HeaderButton.Icon"></i>
+      }
+      @Model.HeaderButton?.DisplayName
+    </NavLink>
+  }
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">@Model.HeaderItem?.DisplayName</h3>
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <ul class="list-group list-group-flush">
+        @if (Model.Items != null)
+        {
+          foreach (var item in Model.Items)
+          {
+            <ListGroupItem @key="item" Model="item" CurrentUrl="@Model.CurrentUrl"></ListGroupItem>
+          }
+        }
+      </ul>
+    </div>
+    <OverLay IsLoading="Model.IsLoading"></OverLay>
+  </div>
+}
+
+
+@code {
+  [Parameter]
+  public IListGroupCardViewModel Model { get; set; }
+}

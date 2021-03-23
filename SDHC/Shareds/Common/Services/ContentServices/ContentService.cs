@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Common.Services.ContentServices
 {
-  public class ContentService : CrudContent, IContentService
+  public class ContentService : CrudContent, IContentService, IContentListService
   {
     public ContentService(ICrudInit container, IConfigService configService) : base(container)
     {
@@ -338,6 +338,63 @@ namespace Common.Services.ContentServices
           catch { }
         }
       });
+    }
+
+    public async Task<IListGroupCardViewModel> GetContentsByParent(
+      long? parentId)
+    {
+      var result = new BaseListGroupCardViewModel();
+      result.ShowHeaderButton = true;
+      IList<IContentModel> lists;
+      if (!parentId.HasValue || parentId <= 0)
+      {
+        result.HeaderButton = new BaseListGroupCardItemViewModel()
+        {
+          DisplayName = "Root",
+          Url = $"/Admin/Page",
+        };
+        var query = await ReadAsync<IContentModel>(BaseIContentModelType, b => b.ParentId == parentId);
+        lists = query.ToList();
+      }
+      else
+      {
+        var parent = (await ReadAsync<IContentModel>(BaseIContentModelType, b => b.Id == parentId)).FirstOrDefault();
+        lists = new List<IContentModel>();
+        if (parent != null)
+        {
+          lists = parent.Children.ToList();
+          result.HeaderButton = new BaseListGroupCardItemViewModel()
+          {
+            DisplayName = "Back to the previous",
+            Url = $"/Admin/Page/{parent.Id}",
+          };
+        }
+      }
+
+
+      var resultList = new List<IListGroupCardItemViewModel>();
+      result.Items = resultList;
+      for (var i = 0; i < lists.Count; i++)
+      {
+        var content = lists[i];
+        var attr = content.GetObjectCustomAttribute<AllowChildrenAttribute>();
+        var contentChildren = content.Children.Count();
+        var item = new BaseListGroupCardItemViewModel()
+        {
+          DisplayName = content.DisplayName(),
+          Url = $"/Admin/Page/{content.Id}",
+          Badges = new IListGroupCardItemBadgeViewModel[]
+          {
+            new BaseListGroupCardItemBadgeViewModel()
+            {
+              Value = contentChildren.ToString(),
+              Url = $"/Admin/Page/{content.Id}/List",
+            }
+          }
+        };
+        resultList.Add(item);
+      }
+      return result;
     }
   }
 }

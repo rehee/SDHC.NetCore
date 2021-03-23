@@ -1,0 +1,28 @@
+﻿@inherits RootLayoutBase
+
+<div class="wrapper">
+  @if (HeaderNavigationItems != null)
+  {
+    <NavMenu Model="HeaderNavigationItems"></NavMenu>
+  }
+
+  @if (SiderBar != null)
+  {
+    <MainSideBar Model="SiderBar"></MainSideBar>
+  }
+
+
+  <div class="content-wrapper">
+    <CascadingValue Value="this">
+      @Body
+    </CascadingValue>
+  </div>
+  @if (CopyRignt != null)
+  {
+    <Footer Model="CopyRignt"></Footer>
+  }
+
+
+</div>
+
+

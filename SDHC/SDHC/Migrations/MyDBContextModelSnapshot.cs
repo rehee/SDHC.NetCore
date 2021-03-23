@@ -19,6 +19,44 @@ namespace SDHC.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Common.NetCore.Models.BaseContent", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("DisplayOrder")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Lang")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Contents");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseContent");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -221,7 +259,20 @@ namespace SDHC.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SDHC.UserAndRoles.Models.SDHCUser", b =>
+            modelBuilder.Entity("SDHC.Models.BaseContentModel", b =>
+                {
+                    b.HasBaseType("Common.NetCore.Models.BaseContent");
+
+                    b.Property<string>("FF")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FF2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("BaseContentModel");
+                });
+
+            modelBuilder.Entity("Common.NetCore.Models.SDHCUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
@@ -232,6 +283,13 @@ namespace SDHC.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("SDHCUser");
+                });
+
+            modelBuilder.Entity("Common.NetCore.Models.BaseContent", b =>
+                {
+                    b.HasOne("Common.NetCore.Models.BaseContent", "ThisParent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

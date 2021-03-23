@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Common.Cruds;
 using Common.Models;
 using Common.NetCore.Models;
+using Common.Services.ConfigServices;
+using Common.Services.ContentServices;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,6 +40,8 @@ namespace SDHC
       services.AddRazorPages();
       services.AddServerSideBlazor();
 
+      var builder = new DbContextOptionsBuilder<MyDBContext>();
+
       Action<DbContextOptionsBuilder> dbAction = options =>
       {
         options.UseSqlServer(
@@ -58,6 +63,19 @@ namespace SDHC
       services.AddScoped<ISDHCUserManager, SDHCUserManager<SDHCUser>>();
       StartUpFunction.ConfigureServices<SDHCUserManager<SDHCUser>>(Configuration, services);
 
+      dbAction(builder);
+      Func<CrudInit> getCrud = () => new CrudInit(() => Activator.CreateInstance(typeof(MyDBContext), builder.Options) as ISave,
+        typeof(BaseContentModel));
+      services.AddScoped<ICrudInit, CrudInit>(
+        (s) => getCrud());
+      
+      services.AddScoped<IConfigService, ConfigService>();
+      services.AddScoped<ICrud, BaseCruds>();
+      services.AddScoped<ICrudContent, CrudContent>();
+      services.AddScoped<ICrudModel, CrudModel>();
+      AbstractBaseContent.Init<BaseContentModel>(()=> new CrudContent(getCrud()));
+      services.AddScoped<IContentService, ContentService>();
+      services.AddScoped<IContentListService, ContentService>();
 
     }
 
@@ -83,7 +101,7 @@ namespace SDHC
                   pattern: "Admin/{controller=AdminHome}/{action=Index}/{id?}");
 
         endpoints.MapBlazorHub();
-        endpoints.MapFallbackToAreaPage("~/Admin/{*clientroutes:nonfile}", "/_Host", "Admin");
+        endpoints.MapFallbackToAreaPage("~/{area:exists}/{*clientroutes:nonfile}", "/_Host", "Admin");
 
         endpoints.MapControllerRoute(
           name: "default",
