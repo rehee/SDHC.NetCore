@@ -1,20 +1,26 @@
-﻿using Common.Cruds;
+﻿using Common.Configs;
+using Common.Cruds;
+using Common.Services;
 using Microsoft.AspNetCore.Mvc;
 using SDHC.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SDHC.Controllers
 {
   public class HomeController : Controller
   {
     private readonly ICrud crud;
+    private readonly IConfigService config;
 
-    public HomeController(ICrud crud)
+    public ISDHCLanguageService Lang { get; }
+
+    public HomeController(ICrud crud,ISDHCLanguageService lang,IConfigService config)
     {
       this.crud = crud;
+      Lang = lang;
+      
+      this.config = config;
+      var a = config.GetTypeSetting<LanguageSetting>("LanguageSetting");
+      
     }
     public IActionResult Index()
     {

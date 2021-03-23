@@ -3,11 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Common.Services.ConfigServices
+namespace Common.Services
 {
   public interface IConfigService
   {
-    SystemConfig Systems { get; set; }
-    Func<string, string> GetSetting { get; set; }
+    SystemConfig Systems { get; }
+    AdminAreaConfig AdminArea { get; }
+    LanguageSetting Language { get; }
+    Func<string, string> GetSetting { get; }
+    T GetTypeSetting<T>(string key);
   }
 }

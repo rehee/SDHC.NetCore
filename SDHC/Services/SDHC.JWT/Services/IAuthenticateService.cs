@@ -1,16 +1,14 @@
 ﻿using Common.Models;
+using Common.Models.ViewModels;
+using Common.Services;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SDHC.JWT.Models;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using UserIdentity;
-using UserIdentity.Models.IdentityModels;
-using UserIdentity.Services;
 
 namespace SDHC.JWT.Services
 {

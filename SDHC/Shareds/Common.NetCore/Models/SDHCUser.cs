@@ -47,6 +47,9 @@ namespace Common.NetCore.Models
     [IgnoreEdit]
     public string WeChatOpenId { get; set; }
 
+    
+    public string Avatar { get; set; }
+
     //public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
     public string GetUserName()

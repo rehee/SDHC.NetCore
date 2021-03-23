@@ -1,14 +1,10 @@
-﻿using Common.Models;
-using Common.NetCore.Models;
+﻿using Common.NetCore.Models;
+using Common.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using SDHC.UserAndRoles.Models;
-using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-using UserIdentity.Services;
 
 namespace SDHC.UserAndRoles.Services
 {
@@ -32,7 +28,7 @@ namespace SDHC.UserAndRoles.Services
       return signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure);
     }
 
-    public async Task<dynamic> GetTwoFactorAuthenticationUserAsync()
+    public async Task<T> GetTwoFactorAuthenticationUserAsync()
     {
       return await signInManager.GetTwoFactorAuthenticationUserAsync();
     }

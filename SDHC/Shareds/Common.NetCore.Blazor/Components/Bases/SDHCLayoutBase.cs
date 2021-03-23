@@ -13,7 +13,7 @@ namespace Common.NetCore.Blazor.Components
     {
       get
       {
-        if (this.Body.Target == null)
+        if (this.Body == null || this.Body.Target == null)
         {
           return null;
         }

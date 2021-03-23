@@ -1,4 +1,4 @@
-﻿using UserIdentity.Models.IdentityModels;
+﻿using Common.Models.ViewModels;
 
 namespace SDHC.JWT.Models
 {

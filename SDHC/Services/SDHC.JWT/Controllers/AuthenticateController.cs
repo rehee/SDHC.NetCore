@@ -1,21 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.IO;
-using System.Linq;
-using System.Security.Claims;
-using System.Text.Json;
 using System.Threading.Tasks;
-using Common.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+using Common.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using SDHC.JWT.Models;
 using SDHC.JWT.Services;
-using UserIdentity.Models.IdentityModels;
-using UserIdentity.Services;
-using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace SDHC.JWT.Controllers
 {
@@ -40,7 +27,7 @@ namespace SDHC.JWT.Controllers
         var isSuccess = await authenticateService.IsAuthenticated(a);
         return StatusCode(200, new { isSuccess = isSuccess.isSuccess, token = isSuccess.token });
       }
-      catch (Exception ex)
+      catch 
       {
         return StatusCode(500, new { isSuccess = false, token = "" });
       }
@@ -57,7 +44,7 @@ namespace SDHC.JWT.Controllers
         var isSuccess = await authenticateService.CreateUser(a);
         return StatusCode(200, new { isSuccess = isSuccess.isSuccess, user = isSuccess.user });
       }
-      catch (Exception ex)
+      catch
       {
         return StatusCode(500, new { isSuccess = false, user = "" });
       }

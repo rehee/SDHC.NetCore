@@ -1,11 +1,8 @@
 ﻿using Common.Models.ViewModels;
 using Common.NetCore.Blazor.Components;
-using Common.Services.ContentServices;
+using Common.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Common.NetCore.Blazor.Layouts
@@ -47,10 +44,9 @@ namespace Common.NetCore.Blazor.Layouts
     }
     protected override void OnInitialized()
     {
-      var a = this;
       base.OnInitialized();
-      RefreshList();
       nav.LocationChanged += LocationChanged;
+      RefreshList();
     }
     void LocationChanged(object sender, LocationChangedEventArgs e)
     {

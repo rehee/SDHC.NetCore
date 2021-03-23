@@ -35,7 +35,6 @@
     <ProjectReference Include="..\Shareds\Common.NetCore.Blazor\Common.NetCore.Blazor.csproj" />
     <ProjectReference Include="..\Shareds\Common.NetCore\Common.NetCore.csproj" />
     <ProjectReference Include="..\Shareds\Common\Common.csproj" />
-    <ProjectReference Include="..\Shareds\UserIdentity\UserIdentity.csproj" />
   </ItemGroup>
 
 </Project>

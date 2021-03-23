@@ -11,7 +11,7 @@ namespace Common.Services.SelectServices
   public class SelectService : ModelService, ISelectService
   {
 
-    public SelectService(CrudInit init) : base(init)
+    public SelectService(ICrudInit init) : base(init)
     {
 
     }

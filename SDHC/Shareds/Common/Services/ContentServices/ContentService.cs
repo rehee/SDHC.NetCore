@@ -1,14 +1,12 @@
 ﻿using Common.Models;
 using Common.Models.ViewModels;
-using Common.Services.ConfigServices;
 using Common.Cruds;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Common.Services.ContentServices
+namespace Common.Services
 {
   public class ContentService : CrudContent, IContentService, IContentListService
   {
@@ -215,7 +213,7 @@ namespace Common.Services.ContentServices
       {
         return;
       }
-      parentLevel = parentLevel + 1;
+      parentLevel++;
       var result = new ContentListView();
       result.Id = model.Id;
       result.Title = model.Title;

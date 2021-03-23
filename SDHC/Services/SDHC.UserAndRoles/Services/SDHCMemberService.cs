@@ -1,19 +1,16 @@
-﻿using Common.Models;
-using Common.NetCore.Models;
+﻿using Common.NetCore.Models;
+using Common.Services;
 using Microsoft.AspNetCore.Identity;
-using SDHC.UserAndRoles.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-using UserIdentity.Services;
 
 namespace SDHC.UserAndRoles.Services
 {
   public class SDHCMemberService<T> :
-    ISDHCMemberService<T, IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo>
+    ISDHCMemberService<T, IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo, IUserValidator<T>, IUserTwoFactorTokenProvider<T>>
     where T : SDHCUser, new()
   {
     private readonly UserManager<T> u;
@@ -23,7 +20,7 @@ namespace SDHC.UserAndRoles.Services
     }
     public IQueryable<T> Users => this.u.Users;
 
-    public IEnumerable<dynamic> UserValidators => this.u.UserValidators.Select(b => b as dynamic);
+    public IEnumerable<IUserValidator<T>> UserValidators => this.u.UserValidators;
 
     public Task<IdentityResult> AccessFailedAsync(T user)
     {
@@ -323,7 +320,7 @@ namespace SDHC.UserAndRoles.Services
       return u.RedeemTwoFactorRecoveryCodeAsync(user, code);
     }
 
-    public void RegisterTokenProvider(string providerName, dynamic provider)
+    public void RegisterTokenProvider(string providerName, IUserTwoFactorTokenProvider<T> provider)
     {
       u.RegisterTokenProvider(providerName, provider);
     }

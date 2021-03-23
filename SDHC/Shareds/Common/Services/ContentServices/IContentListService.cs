@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common.Services.ContentServices
+namespace Common.Services
 {
   public interface IContentListService
   {

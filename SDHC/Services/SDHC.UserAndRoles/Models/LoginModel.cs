@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UserIdentity.Models.IdentityModels;
+﻿using Common.Models.ViewModels;
 
 namespace SDHC.UserAndRoles.Models
 {

@@ -1,17 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
+using Common.Configs;
 using Common.Cruds;
 using Common.Models;
 using Common.NetCore.Models;
-using Common.Services.ConfigServices;
-using Common.Services.ContentServices;
+using Common.NetCore.Services;
+using Common.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,9 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SDHC.JWT;
 using SDHC.Models;
-using SDHC.UserAndRoles.Models;
 using SDHC.UserAndRoles.Services;
-using UserIdentity.Services;
 
 namespace SDHC
 {
@@ -36,6 +31,25 @@ namespace SDHC
     }
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddSession();
+      services.AddHttpContextAccessor();
+
+
+      services.Configure<SystemConfig>(Configuration.GetSection("SystemConfig"));
+      services.Configure<AdminAreaConfig>(Configuration.GetSection("AdminAreaConfig"));
+      services.Configure<LanguageSetting>(Configuration.GetSection("LanguageSetting"));
+      //services.Configure<IEnumerable<LanguageConfig>>(Configuration.GetSection("LanguageSetting:LanguageConfigs"));
+      //var tokenConfig1 = Configuration.GetSection("LanguageSetting").Get<LanguageSetting>();
+      //var language = Configuration.GetSection("LanguageSetting").Get<LanguageSetting>();
+      //language.LanguageConfigs = Configuration.GetSection("LanguageSetting:LanguageConfigs").Get<IEnumerable<LanguageConfig>>();
+
+
+      services.AddScoped<ISessionService, SessionService>();
+      services.AddScoped<IConfigService, ConfigService>();
+
+      services.AddScoped<ISDHCLanguageService, SDHCLanguageService>();
+
+
       services.AddControllers();
       services.AddRazorPages();
       services.AddServerSideBlazor();
@@ -57,25 +71,30 @@ namespace SDHC
         .AddEntityFrameworkStores<MyDBContext>()
         .AddDefaultTokenProviders();
       services.AddScoped<RoleManager<IdentityRole>>();
-      services.AddScoped(typeof(ISDHCMemberService<SDHCUser, IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo>), typeof(SDHCMemberService<SDHCUser>));
+      services.AddScoped(typeof(ISDHCMemberService<SDHCUser, IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo, IUserValidator<SDHCUser>, IUserTwoFactorTokenProvider<SDHCUser>>), typeof(SDHCMemberService<SDHCUser>));
       services.AddScoped(typeof(ISDHCSignInService<SDHCUser, IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo>), typeof(SDHCSignInService<SDHCUser>));
       services.AddScoped<ISDHCUserManager<SDHCUser>, SDHCUserManager<SDHCUser>>();
       services.AddScoped<ISDHCUserManager, SDHCUserManager<SDHCUser>>();
       StartUpFunction.ConfigureServices<SDHCUserManager<SDHCUser>>(Configuration, services);
 
+      services.AddScoped<IUserService, UserService>();
+
+
       dbAction(builder);
-      Func<CrudInit> getCrud = () => new CrudInit(() => Activator.CreateInstance(typeof(MyDBContext), builder.Options) as ISave,
-        typeof(BaseContentModel));
-      services.AddScoped<ICrudInit, CrudInit>(
+      Func<CrudInit<BaseContentModel>> getCrud = () => new CrudInit<BaseContentModel>(() => Activator.CreateInstance(typeof(MyDBContext), builder.Options) as ISave);
+      services.AddScoped<ICrudInit, CrudInit<BaseContentModel>>(
         (s) => getCrud());
-      
-      services.AddScoped<IConfigService, ConfigService>();
+
+
       services.AddScoped<ICrud, BaseCruds>();
       services.AddScoped<ICrudContent, CrudContent>();
       services.AddScoped<ICrudModel, CrudModel>();
-      AbstractBaseContent.Init<BaseContentModel>(()=> new CrudContent(getCrud()));
+      AbstractBaseContent.Init<BaseContentModel>(() => new CrudContent(getCrud()));
       services.AddScoped<IContentService, ContentService>();
       services.AddScoped<IContentListService, ContentService>();
+
+
+      services.AddScoped<ILayoutService, LayoutService>();
 
     }
 
@@ -86,7 +105,7 @@ namespace SDHC
       {
         app.UseDeveloperExceptionPage();
       }
-
+      app.UseSession();
       app.UseAuthentication();
       app.UseStaticFiles();
       app.UseRouting();

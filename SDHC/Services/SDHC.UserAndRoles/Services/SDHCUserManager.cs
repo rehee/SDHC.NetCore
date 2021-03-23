@@ -1,24 +1,24 @@
 ﻿using Common.Models;
+using Common.Models.ViewModels;
 using Common.NetCore.Models;
+using Common.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using SDHC.UserAndRoles.Models;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-using UserIdentity.Models.IdentityModels;
-using UserIdentity.Services;
 
 namespace SDHC.UserAndRoles.Services
 {
   public class SDHCUserManager<TUser> : ISDHCUserManager<TUser> where TUser : SDHCUser, new()
   {
-    public ISDHCMemberService<TUser, IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo> SDHCMemberService;
-    public ISDHCSignInService<TUser, IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo> SDHCSignInService;
+    public ISDHCMemberService<TUser, IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo, IUserValidator<TUser>, IUserTwoFactorTokenProvider<TUser>>
+      SDHCMemberService;
+    public ISDHCSignInService<TUser, IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo>
+      SDHCSignInService;
     public SDHCUserManager(
-      ISDHCMemberService<TUser, IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo> _SDHCMemberService,
+      ISDHCMemberService<TUser, IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo, IUserValidator<TUser>, IUserTwoFactorTokenProvider<TUser>> _SDHCMemberService,
       ISDHCSignInService<TUser, IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo> _SDHCSignInService)
     {
       this.SDHCMemberService = _SDHCMemberService;
@@ -93,8 +93,14 @@ namespace SDHC.UserAndRoles.Services
       return await this.CreateUser(login);
     }
 
-
-
+    public TUser CurrentUser()
+    {
+      return null;
+    }
+    public async Task<IEnumerable<string>> GetUserRole(IUserBase user)
+    {
+      return await this.SDHCMemberService.GetRolesAsync(null);
+    }
   }
 
 

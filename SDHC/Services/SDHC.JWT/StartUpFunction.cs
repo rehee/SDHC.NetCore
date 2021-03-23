@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Common.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SDHC.JWT.Models;
 using SDHC.JWT.Services;
-using System;
-using System.Collections.Generic;
 using System.Text;
-using UserIdentity.Services;
 
 namespace SDHC.JWT
 {
