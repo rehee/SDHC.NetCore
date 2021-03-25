@@ -1,4 +1,5 @@
-﻿using Common.Models;
+﻿using Common.Cruds;
+using Common.Models;
 using Common.Models.ViewModels;
 using Common.NetCore.Models;
 using Common.Services;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -17,27 +19,33 @@ namespace SDHC.UserAndRoles.Services
       SDHCMemberService;
     public ISDHCSignInService<TUser, IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo>
       SDHCSignInService;
+    private readonly ICrud crud;
     public SDHCUserManager(
       ISDHCMemberService<TUser, IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo, IUserValidator<TUser>, IUserTwoFactorTokenProvider<TUser>> _SDHCMemberService,
-      ISDHCSignInService<TUser, IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo> _SDHCSignInService)
+      ISDHCSignInService<TUser, IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo> _SDHCSignInService,
+      ICrud crud)
     {
       this.SDHCMemberService = _SDHCMemberService;
       this.SDHCSignInService = _SDHCSignInService;
+      this.crud = crud;
     }
-    public async Task<TUser> GetUserAsnc(string loginId)
+    public Task<TUser> GetUserAsnc(string loginId)
     {
-      var user = await this.SDHCMemberService.FindByEmailAsync(loginId);
-      if (user != null)
-      {
-        return user;
+      return Task<TUser>.Run(() =>
+   {
+     var upper = loginId.ToUpper();
+     var user = crud.Read<TUser>(b => b.NormalizedEmail == upper).FirstOrDefault(); 
+     if (user != null)
+     {
+       return user;
 
-      }
-      user = await this.SDHCMemberService.FindByNameAsync(loginId);
-      if (user != null)
-      {
-        return user;
-      }
-      return null;
+     }
+     return crud.Read<TUser>(b => b.NormalizedUserName == upper).FirstOrDefault();
+
+   });
+
+
+
     }
 
 
@@ -99,7 +107,23 @@ namespace SDHC.UserAndRoles.Services
     }
     public async Task<IEnumerable<string>> GetUserRole(IUserBase user)
     {
-      return await this.SDHCMemberService.GetRolesAsync(null);
+      return await this.SDHCMemberService.GetRolesAsync(user as TUser);
+    }
+
+    public async Task<bool> Login(ILoginViewModel model)
+    {
+      var user = await GetUserAsnc(model.Email);
+      if (user == null)
+        return false;
+
+      await this.SDHCSignInService.SignInAsync(user, true);
+      //var result = await this.SDHCSignInService.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
+      //if (result)
+      //{
+      //  await this.
+      //}
+      //return result.Succeeded;
+      return true;
     }
   }
 

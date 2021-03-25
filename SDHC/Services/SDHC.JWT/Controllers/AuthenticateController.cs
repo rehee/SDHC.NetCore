@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Common.Models.ViewModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SDHC.JWT.Services;
 
@@ -27,27 +29,33 @@ namespace SDHC.JWT.Controllers
         var isSuccess = await authenticateService.IsAuthenticated(a);
         return StatusCode(200, new { isSuccess = isSuccess.isSuccess, token = isSuccess.token });
       }
-      catch 
+      catch
       {
         return StatusCode(500, new { isSuccess = false, token = "" });
       }
     }
 
-    [HttpPost("Create")]
-    public async Task<IActionResult> Create(object obj)
+
+    [HttpGet("Create")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public async Task<IActionResult> Create()
     {
-      try
-      {
-        var c = obj.ToIDictionary();
-        dynamic MyDynamic = new System.Dynamic.ExpandoObject();
-        var a = TypeMixer<object>.ExtendWith<IRegisterWithNameViewModel>(c);
-        var isSuccess = await authenticateService.CreateUser(a);
-        return StatusCode(200, new { isSuccess = isSuccess.isSuccess, user = isSuccess.user });
-      }
-      catch
-      {
-        return StatusCode(500, new { isSuccess = false, user = "" });
-      }
+      return await Task<IActionResult>.Run(() =>
+     {
+       return StatusCode(200);
+     });
+      //try
+      //{
+      //  var c = obj.ToIDictionary();
+      //  dynamic MyDynamic = new System.Dynamic.ExpandoObject();
+      //  var a = TypeMixer<object>.ExtendWith<IRegisterWithNameViewModel>(c);
+      //  var isSuccess = await authenticateService.CreateUser(a);
+      //  return StatusCode(200, new { isSuccess = isSuccess.isSuccess, user = isSuccess.user });
+      //}
+      //catch
+      //{
+      //  return StatusCode(500, new { isSuccess = false, user = "" });
+      //}
     }
   }
 }

@@ -1,4 +1,5 @@
-﻿using Common.NetCore.Models;
+﻿using Common.Cruds;
+using Common.NetCore.Models;
 using Common.Services;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -14,9 +15,11 @@ namespace SDHC.UserAndRoles.Services
     where T : SDHCUser, new()
   {
     private readonly UserManager<T> u;
-    public SDHCMemberService(UserManager<T> u)
+    private readonly ICrud crud;
+    public SDHCMemberService(UserManager<T> u, ICrud crud)
     {
       this.u = u;
+      this.crud = crud;
     }
     public IQueryable<T> Users => this.u.Users;
 
@@ -128,9 +131,25 @@ namespace SDHC.UserAndRoles.Services
       return await u.FindByLoginAsync(loginProvider, providerKey);
     }
 
-    public async Task<T> FindByNameAsync(string userName)
+    public Task<T> FindByNameAsync(string userName)
     {
-      return await u.FindByNameAsync(userName);
+      return u.FindByNameAsync(userName);
+      //return await Task<T>.Run(() =>
+      //{
+      //  var uperUserName = userName.ToUpper();
+      //  //var d = u.Users.Where(b => b.NormalizedUserName == uperUserName).ToList();
+      //  //return u.Users.Where(b => b.NormalizedUserName == uperUserName).FirstOrDefault();
+      //  try
+      //  {
+      //    var user = this.crud.Read<T>(b => b.NormalizedUserName == uperUserName).ToList().FirstOrDefault();
+      //    return user;
+      //  }
+      //  catch (Exception ex)
+      //  {
+      //    return null;
+      //  }
+
+      //});
     }
 
     public async Task<T> GetUserAsync(ClaimsPrincipal principal)

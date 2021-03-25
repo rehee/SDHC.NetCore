@@ -1,16 +1,20 @@
 ﻿using Common.Models.ViewModels;
 using Common.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Common.NetCore.Services
 {
   public class LayoutService : ILayoutService
   {
     private readonly IConfigService config;
-    private readonly IUserService userService;
+    private readonly IUserServiceStateProvider userService;
 
-    public LayoutService(IConfigService config, IUserService userService)
+    public LayoutService(IConfigService config
+      , IUserServiceStateProvider userService
+      )
     {
       this.config = config;
       this.userService = userService;
@@ -25,13 +29,13 @@ namespace Common.NetCore.Services
         ALT = config.AdminArea.LogoALT,
       };
     }
-    private IUserBrief getUserBrief()
+    private async Task<IUserBrief> getUserBrief()
     {
-      var currentUser = userService.GetCurrentUser();
+      var currentUser = await userService.GetCurrentUser();
       return new BaseUserBrief()
       {
         Alt = currentUser?.UserName ?? "",
-        Avatar = currentUser?.Avata ?? "/_content/Common.NetCore.Blazor/img/user2-160x160.jpg",
+        Avatar = currentUser?.Avata ?? $"{config.AdminTemplete}/img/user2-160x160.jpg",
         DisplayName = currentUser?.UserName
       };
     }
@@ -101,9 +105,9 @@ namespace Common.NetCore.Services
       }
       return result;
     }
-    public IRootViewModel GetAdminRootViewModel(string area)
+    public async Task<IRootViewModel> GetAdminRootViewModel(string area)
     {
-
+      var user = await getUserBrief();
       return new BaseRootViewModel()
       {
         HeaderNavigationItems = new List<INavigationItem>(){
@@ -126,7 +130,7 @@ namespace Common.NetCore.Services
         {
           NavItems = getLeftNavigation(),
           Logo = getAdminLogo(area),
-          User = getUserBrief(),
+          User = user,
         }
       };
     }

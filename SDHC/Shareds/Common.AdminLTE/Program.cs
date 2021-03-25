@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Common.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Common.NetCore.Blazor
+namespace Common.AdminLTE
 {
-  public class Program
+  public class Program : IAdminTempleteRoot
   {
-    public string WWWRoot { get; private set; } = 
+    public string WWWRoot { get; private set; } =
       $"/_content/{typeof(Program).Assembly.FullName.Split(',').FirstOrDefault()}";
   }
 }

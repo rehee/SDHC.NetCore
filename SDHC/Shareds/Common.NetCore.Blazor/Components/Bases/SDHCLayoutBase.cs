@@ -47,6 +47,7 @@ namespace Common.NetCore.Blazor.Components
       return value.MyTryConvert<T>();
     }
     public string Area { get; set; }
+    
     public void Refresh()
     {
       this.StateHasChanged();

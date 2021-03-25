@@ -1,5 +1,6 @@
 ﻿using Common.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -16,9 +17,19 @@ namespace SDHC.JWT
     {
       services.Configure<TokenManagement>(configuration.GetSection(tokenString));
       var tokenConfig = configuration.GetSection(tokenString).Get<TokenManagement>();
+      //services.Configure<AuthorizationOptions>(options =>
+      //{
+      //  options.DefaultPolicy = new AuthorizationPolicyBuilder(new string[]
+      //  {
+      //    "Identity.Application"
+      //  })
+      //  .RequireAuthenticatedUser()
+      //  .Build();
+      //});
       services.AddAuthentication(x =>
       {
         x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultAuthenticateScheme = "Identity.Application";
         x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
       }).AddJwtBearer(x =>
       {
@@ -39,7 +50,7 @@ namespace SDHC.JWT
       });
 
       services.AddScoped<IAuthenticateService, TokenAuthenticationService>();
-      services.AddScoped(typeof(ISDHCUserManager), typeof(TSDHCUserManager));
+
     }
   }
 }

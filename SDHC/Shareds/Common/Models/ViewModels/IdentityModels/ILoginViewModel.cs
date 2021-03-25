@@ -4,7 +4,7 @@
   {
     string Password { get; set; }
   }
-  public interface ILoginViewModel : IEmailBasedViewModel
+  public interface ILoginViewModel : IEmailPasswordBased
   {
     bool RememberMe { get; set; }
   }

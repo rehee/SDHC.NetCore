@@ -1,0 +1,12 @@
+﻿@model Common.Models.ViewModels.LoginViewModel
+@{
+  Layout = null;
+  var user = User;
+}
+<form action="@Url.Action("Login","Identity",new { @area="Admin" })" method="post">
+  <input type="hidden" name="" value="@ViewBag.RedirectUrl" />
+  @Html.TextBoxFor(b => b.Email);
+  @Html.PasswordFor(b => b.Password)
+  @Html.CheckBoxFor(b=>b.RememberMe)
+  <input type="submit" value="Login" />
+</form>

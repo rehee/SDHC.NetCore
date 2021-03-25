@@ -12,5 +12,6 @@ namespace Common.Services
     LanguageSetting Language { get; }
     Func<string, string> GetSetting { get; }
     T GetTypeSetting<T>(string key);
+    string AdminTemplete { get; }
   }
 }

@@ -12,14 +12,19 @@ namespace Common.NetCore.Services
     private readonly IConfiguration configuration;
     private readonly AdminAreaConfig adminArea;
     private readonly LanguageSetting languageSetting;
-    
-    public ConfigService(IConfiguration configuration,
-      IOptions<SystemConfig> config, IOptions<AdminAreaConfig> adminArea, IOptions<LanguageSetting> languageSetting)
+    private readonly IAdminTempleteRoot adminTemplete;
+    public ConfigService(
+      IConfiguration configuration,
+      IOptions<SystemConfig> config,
+      IOptions<AdminAreaConfig> adminArea,
+      IOptions<LanguageSetting> languageSetting,
+      IAdminTempleteRoot adminTemplete)
     {
       this.config = config.Value;
       this.adminArea = adminArea.Value;
       this.configuration = configuration;
       this.languageSetting = languageSetting.Value;
+      this.adminTemplete = adminTemplete;
     }
 
     public SystemConfig Systems => config ?? new SystemConfig();
@@ -35,6 +40,14 @@ namespace Common.NetCore.Services
         };
       }
     }
+    private Func<string> getAdminTemplete
+    {
+      get
+      {
+        return () => adminTemplete.WWWRoot;
+      }
+    }
+    public string AdminTemplete => getAdminTemplete();
 
     public T GetTypeSetting<T>(string key)
     {

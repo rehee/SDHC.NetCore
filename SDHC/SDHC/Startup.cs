@@ -8,6 +8,7 @@ using Common.NetCore.Services;
 using Common.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -45,12 +46,14 @@ namespace SDHC
 
 
       services.AddScoped<ISessionService, SessionService>();
+
+      services.AddScoped<IAdminTempleteRoot, Common.AdminLTE.Program>();
       services.AddScoped<IConfigService, ConfigService>();
 
       services.AddScoped<ISDHCLanguageService, SDHCLanguageService>();
 
 
-      services.AddControllers();
+      services.AddControllersWithViews();
       services.AddRazorPages();
       services.AddServerSideBlazor();
 
@@ -63,6 +66,7 @@ namespace SDHC
       };
 
       services.AddDbContext<MyDBContext>(dbAction);
+      
       services.AddIdentity<SDHCUser, IdentityRole>(
         options =>
         {
@@ -70,14 +74,20 @@ namespace SDHC
         })
         .AddEntityFrameworkStores<MyDBContext>()
         .AddDefaultTokenProviders();
+
       services.AddScoped<RoleManager<IdentityRole>>();
       services.AddScoped(typeof(ISDHCMemberService<SDHCUser, IdentityResult, Claim, ClaimsPrincipal, UserLoginInfo, IUserValidator<SDHCUser>, IUserTwoFactorTokenProvider<SDHCUser>>), typeof(SDHCMemberService<SDHCUser>));
       services.AddScoped(typeof(ISDHCSignInService<SDHCUser, IdentityResult, Claim, SignInResult, ClaimsPrincipal, AuthenticationProperties, AuthenticationScheme, ExternalLoginInfo>), typeof(SDHCSignInService<SDHCUser>));
       services.AddScoped<ISDHCUserManager<SDHCUser>, SDHCUserManager<SDHCUser>>();
       services.AddScoped<ISDHCUserManager, SDHCUserManager<SDHCUser>>();
+      
       StartUpFunction.ConfigureServices<SDHCUserManager<SDHCUser>>(Configuration, services);
 
+      services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<SDHCUser>>();
+      
       services.AddScoped<IUserService, UserService>();
+      
+      services.AddScoped<IUserServiceStateProvider, UserServiceAuthenticationStateProvider>();
 
 
       dbAction(builder);

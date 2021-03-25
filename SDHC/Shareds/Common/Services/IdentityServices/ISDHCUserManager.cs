@@ -10,6 +10,7 @@ namespace Common.Services
     Task<IUserBase> GetUserAsnc(string loginId);
     Task<IUserBase> CheckLoginRequest(ILoginRequest login);
     Task<IUserBase> CreateUser(IRegisterWithNameViewModel login);
+    Task<bool> Login(ILoginViewModel model);
   }
   public interface ISDHCUserManager<TUser> : ISDHCUserManager where TUser : IUserBase
   {
@@ -18,5 +19,8 @@ namespace Common.Services
     new Task<TUser> CreateUser(IRegisterWithNameViewModel login);
 
     Task<IEnumerable<string>> GetUserRole(IUserBase user);
+    new Task<bool> Login(ILoginViewModel model);
+
+    
   }
 }

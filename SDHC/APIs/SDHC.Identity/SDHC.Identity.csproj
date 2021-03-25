@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.1.13" />
+    
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.13" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Services\SDHC.UserAndRoles\SDHC.UserAndRoles.csproj" />
+    <ProjectReference Include="..\..\Shareds\Common.NetCore\Common.NetCore.csproj" />
+    <ProjectReference Include="..\..\Shareds\Common\Common.csproj" />
+  </ItemGroup>
+
+</Project>
