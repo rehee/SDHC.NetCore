@@ -35,5 +35,11 @@ namespace SDHC.JWT.Controllers
       }
       return View(model);
     }
+    
+    public IActionResult LogOff()
+    {
+      um.LogOff().GetAsyncValue();
+      return Redirect("/Admin");
+    }
   }
 }

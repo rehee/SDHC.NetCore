@@ -125,6 +125,10 @@ namespace SDHC.UserAndRoles.Services
       //return result.Succeeded;
       return true;
     }
+    public async Task LogOff()
+    {
+      await this.SDHCSignInService.SignOutAsync();
+    }
   }
 
 

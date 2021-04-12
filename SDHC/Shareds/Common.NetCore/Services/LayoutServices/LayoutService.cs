@@ -120,8 +120,8 @@ namespace Common.NetCore.Services
         },
         new BaseNavigationItem()
         {
-          DisplayName = "Login",
-          Url = "/Admin/Login",
+          DisplayName = "Logout",
+          Url = "/Admin/Identity/LogOff",
           Icon = "fa-tachometer-alt",
           ActiveFullPath = true,
         }

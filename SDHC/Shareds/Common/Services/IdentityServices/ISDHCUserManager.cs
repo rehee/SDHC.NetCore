@@ -21,6 +21,6 @@ namespace Common.Services
     Task<IEnumerable<string>> GetUserRole(IUserBase user);
     new Task<bool> Login(ILoginViewModel model);
 
-    
+    Task LogOff();
   }
 }
