@@ -2,11 +2,132 @@
 @{
   Layout = null;
   var user = User;
+  var _root = Common.AdminLTE.Program.WWWRoot;
 }
-<form action="@Url.Action("Login","Identity",new { @area="Admin" })" method="post">
-  <input type="hidden" name="" value="@ViewBag.RedirectUrl" />
-  @Html.TextBoxFor(b => b.Email);
-  @Html.PasswordFor(b => b.Password)
-  @Html.CheckBoxFor(b=>b.RememberMe)
-  <input type="submit" value="Login" />
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Fixed Sidebar</title>
+  <base href="~/Admin" />
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="@_root/plugins/fontawesome-free/css/all.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="@_root/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="@_root/css/adminlte.min.css">
+  <style>
+    .nav-sidebar .menu-open > .nav-treeview {
+      display: block !important;
+    }
+  </style>
+</head>
+<body id="wrap_body" class="login-page">
+  <app>
+    <component type="typeof(App)" render-mode="ServerPrerendered" />
+  </app>
+  <!-- ./wrapper -->
+  <!-- jQuery -->
+  <script src="@_root/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="@_root/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="@_root/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="@_root/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="@_root/js/demo.js"></script>
+
+  <script>
+    var JsFunctions = window.JsFunctions || {};
+    JsFunctions = {
+      setBodyClass: function (className) {
+
+      }
+    };
+  </script>
+  <div id="blazor-error-ui">
+    <div class="login-box">
+      <div class="login-logo">
+        <a href="#">
+          login text
+        </a>
+      </div>
+
+
+      <div class="card">
+        <div class="card-body login-card-body">
+          <p class="login-box-msg">
+            Sign in to start your session
+          </p>
+
+          <form action="@Url.Action("Login","Identity",new { @area="Admin" })" method="post">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="input-group mb-3">
+              <input type="hidden" name="redirectUrl" value="@ViewBag.RedirectUrl" />
+              <input type="text" name="email" value="@Model.Email" class="form-control" placeholder="Email/User Name" />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input type="password" name="Password" value="@Model.Password" class="form-control" placeholder="Password" />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-8">
+                <div class="icheck-primary">
+                  <input type="checkbox" id="remember" name="RememberMe" value="@Model.RememberMe" />
+                  <label for="remember">
+                    Remember Me
+                  </label>
+                </div>
+              </div>
+              <!-- /.col -->
+              <div class="col-4">
+                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+              </div>
+              <!-- /.col -->
+            </div>
+
+          </form>
+
+
+          <div class="social-auth-links text-center mb-3">
+            <p>- OR -</p>
+            <a href="#" class="btn btn-block btn-primary">
+              <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+            </a>
+            <a href="#" class="btn btn-block btn-danger">
+              <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+            </a>
+          </div>
+          <!-- /.social-auth-links -->
+
+          <p class="mb-1">
+            <a href="forgot-password.html">I forgot my password</a>
+          </p>
+          <p class="mb-0">
+            <a href="register.html" class="text-center">Register a new membership</a>
+          </p>
+        </div>
+        <!-- /.login-card-body -->
+      </div>
+
+    </div>
+  </div>
+
+
+
+</body>
+</html>

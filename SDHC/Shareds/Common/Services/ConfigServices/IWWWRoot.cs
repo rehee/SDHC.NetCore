@@ -7,9 +7,10 @@ namespace Common.Services
 {
   public interface IWWWRoot
   {
-    string WWWRoot { get; }
+    static string WWWRoot { get; }
   }
-  public interface IAdminTempleteRoot: IWWWRoot
+  public interface IAdminTempleteRoot : IWWWRoot
   {
+    public string GetWWWRoot();
   }
 }

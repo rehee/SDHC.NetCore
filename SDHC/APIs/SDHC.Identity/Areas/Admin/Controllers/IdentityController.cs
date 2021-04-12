@@ -18,10 +18,10 @@ namespace SDHC.JWT.Controllers
     {
       this.um = um;
     }
-    public IActionResult Login(string id = "")
+    public IActionResult Login(string redirectUrl)
     {
-      ViewBag.RedirectUrl = id;
-      return View(null);
+      ViewBag.RedirectUrl = redirectUrl;
+      return View(new LoginViewModel());
     }
     [HttpPost]
     public IActionResult Login(LoginViewModel model, string redirectUrl)
@@ -31,10 +31,9 @@ namespace SDHC.JWT.Controllers
       var result = um.Login(model).GetAsyncValue();
       if (result)
       {
-        return Redirect("/Admin/Identity/Login");
+        return Redirect(redirectUrl ?? "/Admin");
       }
       return View(model);
     }
-
   }
 }

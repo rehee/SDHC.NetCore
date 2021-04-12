@@ -44,7 +44,7 @@ namespace Common.NetCore.Services
     {
       get
       {
-        return () => adminTemplete.WWWRoot;
+        return () => adminTemplete.GetWWWRoot();
       }
     }
     public string AdminTemplete => getAdminTemplete();

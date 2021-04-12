@@ -8,7 +8,12 @@ namespace Common.AdminLTE
 {
   public class Program : IAdminTempleteRoot
   {
-    public string WWWRoot { get; private set; } =
+    public static string WWWRoot { get; private set; } =
       $"/_content/{typeof(Program).Assembly.FullName.Split(',').FirstOrDefault()}";
+
+    public string GetWWWRoot()
+    {
+      return WWWRoot;
+    }
   }
 }

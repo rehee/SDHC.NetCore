@@ -6,6 +6,10 @@
 @{
   Layout = null;
   var _root = config.AdminTemplete;
+  if (!User.Identity.IsAuthenticated)
+  {
+    Response.Redirect(Url.Action("Login", "Identity", new { area = "Admin", redirectUrl = Request.Path }));
+  }
 }
 
 <!DOCTYPE html>
@@ -49,10 +53,7 @@
     var JsFunctions = window.JsFunctions || {};
     JsFunctions = {
       setBodyClass: function (className) {
-        document.body.className = className || "hold-transition sidebar-mini layout-fixed";
-        if (className == 'login-page') {
-          document.body.style = null;
-        }
+
       }
     };
   </script>

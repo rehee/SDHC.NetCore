@@ -34,7 +34,7 @@ namespace SDHC.UserAndRoles.Services
       return Task<TUser>.Run(() =>
    {
      var upper = loginId.ToUpper();
-     var user = crud.Read<TUser>(b => b.NormalizedEmail == upper).FirstOrDefault(); 
+     var user = crud.Read<TUser>(b => b.NormalizedEmail == upper).FirstOrDefault();
      if (user != null)
      {
        return user;
